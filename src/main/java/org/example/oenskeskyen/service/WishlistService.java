@@ -19,4 +19,10 @@ public class WishlistService {
     public List<Wish> getWishlist() {
         return wishlistRepository.getWishlist();
     }
+
+    public void updateWish(Wish wish){
+        wishlistRepository.updateWish(wish);
+    }
+
+
 }

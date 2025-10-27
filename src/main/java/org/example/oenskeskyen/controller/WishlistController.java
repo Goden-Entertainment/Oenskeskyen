@@ -5,13 +5,16 @@ import org.example.oenskeskyen.service.WishlistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+
 @Controller
 @RequestMapping("wishlist")
 public class WishlistController {
+
     final private WishlistService wishlistService;
 
     public WishlistController(WishlistService wishlistService) {
@@ -25,4 +28,13 @@ public class WishlistController {
         model.addAttribute("list", wishes);
         return "wishes";
     }
+
+@PostMapping("/update")
+    public String updateWish(Wish wish) {
+    System.out.println(wish);
+    wishlistService.updateWish(wish);
+    return "redirect:/wishes";
+}
+
+
 }
