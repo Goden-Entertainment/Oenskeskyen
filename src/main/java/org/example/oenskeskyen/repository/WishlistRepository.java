@@ -1,6 +1,7 @@
 package org.example.oenskeskyen.repository;
 
 import org.example.oenskeskyen.model.Wish;
+import org.example.oenskeskyen.model.WishList;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,10 +29,18 @@ public class WishlistRepository {
     }
 
 
+    public List<WishList> getWishList() {
+        String sqlGet = "SELECT * FROM wishlist";
+        return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
+                new WishList(rs.getString("name"))
+        );
+    }
+
+
 
     public List<Wish> getWishes() {
-        String sql = "SELECT * FROM wishes";
-        return jdbcTemplate.query(sql, (rs, rowNum) ->
+        String sqlGet = "SELECT * FROM wishes";
+        return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
                 new Wish(
                         rs.getString("name"),
                         rs.getDouble("price"),
@@ -40,12 +49,24 @@ public class WishlistRepository {
         );
     }
 
+    public void addWishList(WishList wishList){
+        String sqlAdd = "INSERT INTO wishlist (name) values(?)";
+        jdbcTemplate.update(sqlAdd, wishList.getName());
+    }
+
+    public void addWish(Wish wish){
+        String sqlAdd = "INSERT INTO wishes (name, link, price ) values (?,?,?)";
+        jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice());
+    }
+
+
+
     public void updateWish(Wish wish) throws DataAccessException {
-        String sql = "UPDATE wishes SET name = ?, price = ?, link = ?";
-        jdbcTemplate.query(sql, (rs, rowNum) ->
+        String sqlUpdate = "UPDATE wishes SET name = ?, price = ?, link = ?";
+        jdbcTemplate.query(sqlUpdate, (rs, rowNum) ->
                         wish.getName(),
-                wish.getPrice(),
-                wish.getLink());
+                        wish.getPrice(),
+                        wish.getLink());
 
     }
 
@@ -53,7 +74,6 @@ public class WishlistRepository {
         String sqlDel = "DELETE FROM wishes where name = ? ";
         jdbcTemplate.update(sqlDel);
     }
-
 
 
 }

@@ -1,6 +1,7 @@
 package org.example.oenskeskyen.service;
 
 import org.example.oenskeskyen.model.Wish;
+import org.example.oenskeskyen.model.WishList;
 import org.example.oenskeskyen.repository.WishlistRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,15 @@ public class WishlistService {
     public List<Wish> getWishes() {
         return wishlistRepository.getWishes();
     }
+
+    public void addWishList(WishList wishList){
+        wishlistRepository.addWishList(wishList);
+    }
+
+    public void addWish(Wish wish){
+        wishlistRepository.addWish(wish);
+    }
+
 
     public void updateWish(Wish wish) {
         wishlistRepository.updateWish(wish);
