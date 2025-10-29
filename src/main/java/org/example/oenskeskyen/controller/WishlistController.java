@@ -29,12 +29,12 @@ public class WishlistController {
         return "wishes";
     }
 
-@PostMapping("/update")
+    @PostMapping("/{name}/update")
     public String updateWish(Wish wish) {
-    System.out.println(wish);
-    wishlistService.updateWish(wish);
-    return "redirect:/wishes";
-}
+        System.out.println(wish);
+        wishlistService.updateWish(wish);
+        return "redirect:/wishes";
+    }
 
 
 }

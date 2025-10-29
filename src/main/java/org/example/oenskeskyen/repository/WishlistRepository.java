@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 
 
@@ -27,7 +28,8 @@ public class WishlistRepository {
     }
 
 
-    public List<Wish> getWishlist() {
+
+    public List<Wish> getWishes() {
         String sql = "SELECT * FROM wishes";
         return jdbcTemplate.query(sql, (rs, rowNum) ->
                 new Wish(
@@ -38,14 +40,20 @@ public class WishlistRepository {
         );
     }
 
-    public void updateWish(Wish wish)  throws DataAccessException {
+    public void updateWish(Wish wish) throws DataAccessException {
         String sql = "UPDATE wishes SET name = ?, price = ?, link = ?";
         jdbcTemplate.query(sql, (rs, rowNum) ->
-                wish.getName(),
+                        wish.getName(),
                 wish.getPrice(),
                 wish.getLink());
 
     }
+
+    public void deletewish(String name) throws DataAccessException {
+        String sqlDel = "DELETE FROM wishes where name = ? ";
+        jdbcTemplate.update(sqlDel);
+    }
+
 
 
 }

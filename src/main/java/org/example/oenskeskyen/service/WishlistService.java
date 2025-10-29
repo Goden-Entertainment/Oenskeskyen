@@ -16,13 +16,18 @@ public class WishlistService {
         this.wishlistRepository = wishlistRepository;
     }
 
-    public List<Wish> getWishlist() {
-        return wishlistRepository.getWishlist();
+    public List<Wish> getWishes() {
+        return wishlistRepository.getWishes();
     }
 
-    public void updateWish(Wish wish){
+    public void updateWish(Wish wish) {
         wishlistRepository.updateWish(wish);
     }
+
+    public void deletewish(String name) {
+        wishlistRepository.deletewish(name);
+    }
+
 
 
 }
