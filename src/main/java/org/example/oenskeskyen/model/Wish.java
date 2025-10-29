@@ -5,12 +5,14 @@ public class Wish {
     private double price;
     private String link;
     private int id;
+    private String description;
 
-    public Wish(String name, double price, String link, int id) {
+    public Wish(String name, double price, String link, int id, String description) {
         this.name = name;
         this.price = price;
         this.link = link;
         this.id = id;
+        this.description = description;
     }
 
     public void setName(String name) {
@@ -44,5 +46,14 @@ public class Wish {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }
 

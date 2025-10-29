@@ -2,7 +2,6 @@ package org.example.oenskeskyen.repository;
 
 import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,7 +22,7 @@ public class WishlistRepository {
     public void makeTabel() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(int id AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255)");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(name VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,");
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes( int id AUTO_INCREMENT PRIMARY KEY,VARCHAR name(255) NOT NULL, price DOUBLE, link VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes( int id AUTO_INCREMENT PRIMARY KEY,VARCHAR name(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255))");
 
     }
 
@@ -43,7 +42,8 @@ public class WishlistRepository {
                         rs.getString("name"),
                         rs.getDouble("price"),
                         rs.getString("link"),
-                        rs.getInt("id")
+                        rs.getInt("id"),
+                        rs.getString("description")
                 )
         );
     }
@@ -84,8 +84,8 @@ public class WishlistRepository {
                         rs.getString("name"),
                         rs.getDouble("price"),
                         rs.getString("link"),
-                        rs.getInt("id")
-                )
+                        rs.getInt("id"),
+                        rs.getString("description"))
         );
     }
 
