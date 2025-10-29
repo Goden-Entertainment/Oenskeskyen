@@ -34,8 +34,12 @@ public class WishlistService {
         wishlistRepository.updateWish(wish);
     }
 
-    public void deletewish(String name) {
-        wishlistRepository.deletewish(name);
+    public void deletewish(int id) {
+        wishlistRepository.deletewish(id);
+    }
+
+    public Wish serchWish(int id) {
+       return wishlistRepository.serchWish(id);
     }
 
 

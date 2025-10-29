@@ -7,8 +7,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-
 
 import java.util.List;
 
@@ -21,10 +19,11 @@ public class WishlistRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    //opmærksom på hvordan wishes er skrevet op
     public void makeTabel() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(int id AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255)");
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(VARCHAR name AUTO_INCREMENT PRIMARY KEY,");
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(VARCHAR name AUTO_INCREMENT PRIMARY KEY, price DOUBLE, link VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(name VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes( int id AUTO_INCREMENT PRIMARY KEY,VARCHAR name(255) NOT NULL, price DOUBLE, link VARCHAR(255))");
 
     }
 
@@ -36,43 +35,58 @@ public class WishlistRepository {
         );
     }
 
-
-
+//Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
     public List<Wish> getWishes() {
         String sqlGet = "SELECT * FROM wishes";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
                 new Wish(
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getString("link")
+                        rs.getString("link"),
+                        rs.getInt("id")
                 )
         );
     }
 
-    public void addWishList(WishList wishList){
+
+    public void addWishList(WishList wishList) {
         String sqlAdd = "INSERT INTO wishlist (name) values(?)";
         jdbcTemplate.update(sqlAdd, wishList.getName());
     }
 
-    public void addWish(Wish wish){
+    public void addWish(Wish wish) {
         String sqlAdd = "INSERT INTO wishes (name, link, price ) values (?,?,?)";
         jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice());
     }
 
 
-
     public void updateWish(Wish wish) throws DataAccessException {
-        String sqlUpdate = "UPDATE wishes SET name = ?, price = ?, link = ?";
+        String sqlUpdate = "UPDATE wishes SET name = ?, price = ?, link = ? WHERE id = ? ";
         jdbcTemplate.query(sqlUpdate, (rs, rowNum) ->
                         wish.getName(),
-                        wish.getPrice(),
-                        wish.getLink());
+                wish.getPrice(),
+                wish.getLink(),
+                wish.getLink());
 
     }
 
-    public void deletewish(String name) throws DataAccessException {
-        String sqlDel = "DELETE FROM wishes where name = ? ";
-        jdbcTemplate.update(sqlDel);
+    public void deletewish(int id) throws DataAccessException {
+        String sqlDel = "DELETE FROM wishes where id = ? ";
+        jdbcTemplate.update(sqlDel, id);
+    }
+
+    public Wish serchWish(int id) {
+        String sqlSerch = "SELECT * FROM wishes WHERE id = ?";
+
+
+        return jdbcTemplate.queryForObject(sqlSerch, (rs, rowNum) ->
+                new Wish(
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("link"),
+                        rs.getInt("id")
+                )
+        );
     }
 
 
