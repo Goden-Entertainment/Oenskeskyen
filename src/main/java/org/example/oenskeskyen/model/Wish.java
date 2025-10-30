@@ -15,6 +15,9 @@ public class Wish {
         this.description = description;
     }
 
+    public Wish() {
+    }
+
     public void setName(String name) {
         this.name = name;
     }

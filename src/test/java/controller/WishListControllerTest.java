@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -35,7 +36,7 @@ public class WishListControllerTest {
 
     @Test
     void shouldGetAllWishes() throws Exception{
-        Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brndbil");
+        Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil");
         when(wishlistService.getWishes()).thenReturn(List.of(wishTest));
 
         mockMvc.perform(get("/wishlist/list"))
