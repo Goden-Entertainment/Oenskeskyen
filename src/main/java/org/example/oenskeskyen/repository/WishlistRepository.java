@@ -15,15 +15,34 @@ public class WishlistRepository {
     JdbcTemplate jdbcTemplate;
 
     public WishlistRepository(JdbcTemplate jdbcTemplate) {
+
         this.jdbcTemplate = jdbcTemplate;
+
+        makeTabel();
+        testData();
     }
 
     //opmærksom på hvordan wishes er skrevet op
     public void makeTabel() {
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(int id AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255)");
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(name VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,");
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes( int id AUTO_INCREMENT PRIMARY KEY,VARCHAR name(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255))");
 
+    }
+
+    public void testData(){
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
+
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?)", "Godens Ønskeliste");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?)", "Yadis ønskeliste");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?)", "Druid Ønskeliste");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?)", "Unc");
+
+        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description) VALUES (?, ?, ?, ?)", "Brøndbil", "250 kr.", "www.yadi.com", "Den skal være rød");
+        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description) VALUES (?, ?, ?, ?)", "Tshirt H&M", "450 kr.", "august.com", "Den skal være i M og sort");
     }
 
 
