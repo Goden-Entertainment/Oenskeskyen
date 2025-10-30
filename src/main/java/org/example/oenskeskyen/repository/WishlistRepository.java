@@ -18,12 +18,12 @@ public class WishlistRepository {
 
         this.jdbcTemplate = jdbcTemplate;
 
-        makeTabel();
+        makeTable();
         testData();
     }
 
     //opmærksom på hvordan wishes er skrevet op
-    public void makeTabel() {
+    public void makeTable() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255))");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255))");
