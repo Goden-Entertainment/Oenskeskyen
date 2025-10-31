@@ -24,12 +24,21 @@ public class WishlistController {
     }
 
     @GetMapping("addUser")
-    public String addUser(Model model) {
-        User user = new User();
+    public String addUser (Model model){
+            User user = new User();
 
-        model.addAttribute("signup", wishlistService.addUser(user));
-        return "signup";
-    }
+            model.addAttribute("signup", user);
+            return "signup";
+        }
+
+@PostMapping("/save")
+public String saveUser(@ModelAttribute User user){
+wishlistService.addUser(user);
+
+return "profile";
+
+}
+
 
     @GetMapping("profile")
     public String showProfile(Model model) {

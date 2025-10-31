@@ -7,6 +7,7 @@ import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
 import org.example.oenskeskyen.repository.WishlistRepository;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class WishlistService {
     }
 
 
-    public User addUser(User user) {
-        return (User) wishlistRepository.addUser(user);
+    public void addUser(User user) {
+        wishlistRepository.addUser(user);
     }
 
 
