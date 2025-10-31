@@ -1,13 +1,12 @@
 package org.example.oenskeskyen.controller;
 
+import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
+import org.example.oenskeskyen.model.WishList;
 import org.example.oenskeskyen.service.WishlistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,13 +22,6 @@ public class WishlistController {
         this.wishlistService = wishlistService;
 
     }
-
-    @GetMapping("homepage")
-    public String homepage() {
-
-        return "homepage";
-    }
-
 
     @GetMapping("addUser")
     public String addUser(Model model) {
