@@ -36,7 +36,7 @@ public class WishlistControllerTest {
     @Test
     void shouldGetAllWishes() throws Exception{
         Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil");
-        when(wishlistService.getWishes(id)).thenReturn(List.of(wishTest));
+        when(wishlistService.getWishes()).thenReturn(List.of(wishTest));
 
         mockMvc.perform(get("/wishlist/wishList"))
                 .andExpect(status().isOk())
