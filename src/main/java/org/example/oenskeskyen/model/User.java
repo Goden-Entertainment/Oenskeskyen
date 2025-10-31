@@ -18,6 +18,8 @@ public class User {
         this.wishlist = wishlist;
     }
 
+    public User(){}
+
     public int getId() {
         return id;
     }
@@ -34,13 +36,15 @@ public class User {
         this.username = username;
     }
 
-    public String getCode() {
+
+    public String getPassword() {
         return password;
     }
 
-    public void setCode(String code) {
-        this.password = code;
+    public void setPassword(String password) {
+        this.password = password;
     }
+
 
     public String getEmail() {
         return email;

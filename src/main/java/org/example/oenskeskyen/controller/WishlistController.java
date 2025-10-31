@@ -1,11 +1,13 @@
 package org.example.oenskeskyen.controller;
 
+import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
 import org.example.oenskeskyen.service.WishlistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,29 +19,77 @@ import java.util.List;
 public class WishlistController {
 
     final private WishlistService wishlistService;
+    private User user;
 
     public WishlistController(WishlistService wishlistService) {
         this.wishlistService = wishlistService;
 
     }
 
-    @GetMapping("list")
-    public String getAllWishlist(Model model) {
-        List<Wish> wishes = wishlistService.getWishes();
-        model.addAttribute("list", wishes);
-        return "wishes";
-    }
+    @GetMapping("homepage")
+    public String homepage() {
 
-    @PostMapping("/{name}/update")
-    public String updateWish(Wish wish) {
-        System.out.println(wish);
-        wishlistService.updateWish(wish);
-        return "redirect:/wishList/list";
+        return "homepage";
     }
 
 
-    @GetMapping("/addWishList")
+    @GetMapping("addUser")
+    public String addUser(Model model) {
+        User user = new User();
+
+        model.addAttribute("signup", wishlistService.addUser(user));
+        return "signup";
+    }
+
+    @GetMapping("profile")
+    public String showProfile(Model model) {
+        model.addAttribute("wishlist", wishlistService.getWishList());
+
+        //henter alle ønskelister
+        List<WishList> wishLists = wishlistService.getWishList();
+        model.addAttribute("list", wishLists);
+        return "profile";
+    }
+
+
+    //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
+    @GetMapping("wishList")
+    public String myWishList(Model model, int id) {
+        model.addAttribute("myWishList", wishlistService.getWishes(id));
+
+        //Det forneden forkommer også i linje 108
+        Wish newWish = new Wish();
+        model.addAttribute("addWishForm", newWish);
+
+        //SERCH WISH FUNKTIONEN MANGLER
+        return "myWishList";
+    }
+
+
+    @PostMapping("/{id}/update")
+    public String updateWish(@PathVariable int id, Model model) {
+        Wish wish = (Wish) wishlistService.getWishes(id);
+        if (wish == null) {
+            throw new IllegalArgumentException("erro, invalid wish name");
+        }
+        model.addAttribute("wish", wish);
+
+        return "redirect: /profile";
+    }
+
+    @PostMapping("{id}/delete")
+    public String deleteWish(@PathVariable int id) {
+        wishlistService.deletewish(id);
+
+        return "redirect: /profile";
+    }
+
+
+    //Kig denne metode igennem
+    @GetMapping("/addWishListForm")
     public String addWishlist(Model model) {
+
+
         WishList newWishList = new WishList("halla");
         model.addAttribute("wishlist", newWishList);
 
@@ -57,7 +107,7 @@ public class WishlistController {
     @GetMapping("/addWish")
     public String addWish(Model model) {
         Wish newWish = new Wish();
-        model.addAttribute("wish", newWish);
+        model.addAttribute("addWishForm", newWish);
 //        model.addAttribute("price", newWish);
 //        model.addAttribute("link", newWish);
 //        model.addAttribute("id", newWish);
