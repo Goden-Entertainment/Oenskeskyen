@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProfileController {
 
     @GetMapping("/signin")
-    public String showSignupForm(Model model) {
+    public String showSigninForm(Model model) {
         model.addAttribute("user", new User());
         return "signin";
     }
@@ -24,6 +24,12 @@ public class ProfileController {
         return "signin-success";
     }
 
+
+    @GetMapping("/signup")
+    public String showSignupForm(Model model){
+        model.addAttribute("user",new User());
+        return "signup";
+    }
     @PostMapping("/signup")
     public String signup(
             @RequestParam String email,
@@ -31,6 +37,6 @@ public class ProfileController {
             @RequestParam("password-repeat") String confirmPassword,
             @RequestParam(required = false) boolean remember
     ) {
-        return "signup-success";
+        return "profile";
     }
 }
