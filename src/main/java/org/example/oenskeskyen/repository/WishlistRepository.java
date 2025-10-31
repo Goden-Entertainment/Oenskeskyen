@@ -1,5 +1,6 @@
 package org.example.oenskeskyen.repository;
 
+import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
 import org.springframework.dao.DataAccessException;
@@ -13,6 +14,8 @@ import java.util.List;
 public class WishlistRepository {
 
     JdbcTemplate jdbcTemplate;
+
+    private User user;
 
     public WishlistRepository(JdbcTemplate jdbcTemplate) {
 
@@ -46,6 +49,15 @@ public class WishlistRepository {
     }
 
 
+    public List<User> addUser(User user){
+        String sqlAddUser = "INSERT INTO users (username, password, id, email, wishlist) values (?,?,?,?,?)";
+
+        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail(), user.getId(), user.getWishlist());
+
+        //Skal den stå tom eller er dette rigtigt?
+        return List.of(user);
+    }
+
     public List<WishList> getWishList() {
         String sqlGet = "SELECT * FROM wishlist";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
@@ -54,7 +66,7 @@ public class WishlistRepository {
     }
 
 //Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
-    public List<Wish> getWishes() {
+    public List<Wish> getWishes(int id) {
         String sqlGet = "SELECT * FROM wishes";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
                 new Wish(
@@ -66,7 +78,6 @@ public class WishlistRepository {
                 )
         );
     }
-
 
     public void addWishList(WishList wishList) {
         String sqlAdd = "INSERT INTO wishlist (name) values(?)";
@@ -89,9 +100,10 @@ public class WishlistRepository {
 
     }
 
-    public void deletewish(int id) throws DataAccessException {
+    public int deletewish(int id) throws DataAccessException {
         String sqlDel = "DELETE FROM wishes where id = ? ";
-        jdbcTemplate.update(sqlDel, id);
+
+        return  jdbcTemplate.update(sqlDel, id);
     }
 
     public Wish serchWish(int id) {

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Oenskeskyen</title>
+    <link rel="stylesheet" th:href="@{/css/homepage.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="/" class="brand">
+            <span class="brand-icon" aria-hidden="true">🎁</span>
+            <span class="brand-name">Oenskeskyen</span>
+        </a>
+
+        <nav class="nav-actions">
+            <a class="link" href="/signin">Login</a>
+            <a class="btn btn-primary" href="/signup">Sign Up</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container hero">
+    <div class="hero-text">
+        <h1>Your wishes in the cloud</h1>
+        <p>Create and share your wishlists with friends and family. Make every occasion special with Oenskeskyen.</p>
+
+        <div class="hero-cta">
+            <a class="btn btn-primary" href="/signup">Get Started</a>
+            <a class="btn btn-outline" href="/signin">Sign In</a>
+        </div>
+    </div>
+
+    <div class="hero-image card">
+        <img th:src="@{/images/gifts.png}" alt="Gift boxes" />
+    </div>
+</main>
+
+</body>
+</html>
