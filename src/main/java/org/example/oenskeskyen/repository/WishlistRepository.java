@@ -54,9 +54,9 @@ public class WishlistRepository {
 
 
     public void addUser(User user) {
-        String sqlAddUser = "INSERT INTO users (username, password, id, email, wishlist) values (?,?,?,?,?)";
+        String sqlAddUser = "INSERT INTO users (username, password, email) values (?,?,?)";
 
-        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail(), user.getId(), user.getWishlist());
+        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail());
 
     }
 

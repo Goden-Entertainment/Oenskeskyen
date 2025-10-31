@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form th:action="@{/signup}" method="post" style="border:1px solid #ccc">
+<form th:action="@{/wishlist/save}" th:object="${user}" method="post"  style="border:1px solid #ccc">
     <div class="container">
         <h1>Sign Up</h1>
         <p>Please fill in this form to create an account.</p>
@@ -36,7 +36,7 @@
 
         <div class="clearfix">
             <button formaction="/" formmethod="get" class="cancelButton">Cancel</button>
-            <button type="submit" class="signUpButton">Sign Up</button>
+            <button class="signUpButton" type="submit">Sign Up</button>
         </div>
     </div>
 </form>

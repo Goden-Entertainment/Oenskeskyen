@@ -35,14 +35,14 @@ public class WishlistController {
 public String saveUser(@ModelAttribute User user){
 wishlistService.addUser(user);
 
-return "profile";
+return "redirect:/wishlist/profile";
 
 }
 
 
     @GetMapping("profile")
     public String showProfile(Model model) {
-        model.addAttribute("wishlist", wishlistService.getWishList());
+        //model.addAttribute("wishlist", wishlistService.getWishList());
 
         //henter alle ønskelister
         List<WishList> wishLists = wishlistService.getWishList();
