@@ -10,9 +10,9 @@ public class User {
     private String email;
     private List<String> wishlist;
 
-    public User(String username, String code, int id, List<String> wishlist, String email) {
+    public User(String username, String password, int id, List<String> wishlist, String email) {
         this.username = username;
-        this.password = code;
+        this.password = password;
         this.id = id;
         this.email = email;
         this.wishlist = wishlist;
@@ -36,15 +36,13 @@ public class User {
         this.username = username;
     }
 
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String code) {
+        this.password = code;
     }
-
 
     public String getEmail() {
         return email;
