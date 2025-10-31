@@ -19,6 +19,7 @@ public class ProfileController {
     @PostMapping("/signin")
     public String signup(
             @RequestParam String email,
+            @RequestParam String username,
             @RequestParam String password
     ) {
         return "signin-success";
@@ -33,6 +34,7 @@ public class ProfileController {
     @PostMapping("/signup")
     public String signup(
             @RequestParam String email,
+            @RequestParam String username,
             @RequestParam String password,
             @RequestParam("password-repeat") String confirmPassword,
             @RequestParam(required = false) boolean remember
