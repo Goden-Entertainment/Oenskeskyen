@@ -49,15 +49,14 @@ public class WishlistRepository {
     }
 
 
-    public List<User> addUser(User user){
+    public void addUser(User user){
         String sqlAddUser = "INSERT INTO users (username, password, id, email, wishlist) values (?,?,?,?,?)";
 
         jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail(), user.getId(), user.getWishlist());
 
-        //Skal den stå tom eller er dette rigtigt?
-        return List.of(user);
     }
 
+    //Her
     public List<WishList> getWishList() {
         String sqlGet = "SELECT * FROM wishlist";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
@@ -79,11 +78,13 @@ public class WishlistRepository {
         );
     }
 
+    //test
     public void addWishList(WishList wishList) {
         String sqlAdd = "INSERT INTO wishlist (name) values(?)";
         jdbcTemplate.update(sqlAdd, wishList.getName());
     }
 
+    //Test
     public void addWish(Wish wish) {
         String sqlAdd = "INSERT INTO wishes (name, link, price ) values (?,?,?)";
         jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice());
@@ -100,17 +101,18 @@ public class WishlistRepository {
 
     }
 
+    //
     public int deletewish(int id) throws DataAccessException {
         String sqlDel = "DELETE FROM wishes where id = ? ";
 
         return  jdbcTemplate.update(sqlDel, id);
     }
 
-    public Wish serchWish(int id) {
-        String sqlSerch = "SELECT * FROM wishes WHERE id = ?";
+    public Wish serchWish(String name) {
+        String sqlSearch = "SELECT * FROM wishes WHERE name = ?";
 
 
-        return jdbcTemplate.queryForObject(sqlSerch, (rs, rowNum) ->
+        return jdbcTemplate.queryForObject(sqlSearch, new Object[]{name}, (rs, rowNum) ->
                 new Wish(
                         rs.getString("name"),
                         rs.getDouble("price"),
@@ -119,6 +121,4 @@ public class WishlistRepository {
                         rs.getString("description"))
         );
     }
-
-
 }

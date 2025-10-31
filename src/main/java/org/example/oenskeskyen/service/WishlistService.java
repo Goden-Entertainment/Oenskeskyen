@@ -23,8 +23,8 @@ public class WishlistService {
     }
 
 
-    public User addUser(User user) {
-        return (User) wishlistRepository.addUser(user);
+    public void addUser(User user) {
+        wishlistRepository.addUser(user);
     }
 
 
@@ -62,8 +62,8 @@ public class WishlistService {
         // wishlistRepository.deletewish(id);
     }
 
-    public Wish serchWish(int id) {
-        return wishlistRepository.serchWish(id);
+    public Wish searchWish(String name) {
+        return wishlistRepository.serchWish(name);
     }
 
 

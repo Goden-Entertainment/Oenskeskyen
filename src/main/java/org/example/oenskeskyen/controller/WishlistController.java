@@ -24,10 +24,9 @@ public class WishlistController {
     }
 
     @GetMapping("addUser")
-    public String addUser(Model model) {
-        User user = new User();
+    public String addUser(@ModelAttribute Model model) {
+        wishlistService.addUser(user);
 
-        model.addAttribute("signup", wishlistService.addUser(user));
         return "signup";
     }
 
@@ -56,15 +55,16 @@ public class WishlistController {
     }
 
 
-    @PostMapping("/{id}/update")
-    public String updateWish(@PathVariable int id, Model model) {
-        Wish wish = (Wish) wishlistService.getWishes(id);
+    @PostMapping("/{name}/update")
+    public String updateWish(@PathVariable String name, Model model) {
+        Wish wish = (Wish) wishlistService.searchWish(name);
+
         if (wish == null) {
-            throw new IllegalArgumentException("erro, invalid wish name");
+            throw new IllegalArgumentException("error, invalid wish name");
         }
         model.addAttribute("wish", wish);
 
-        return "redirect: /profile";
+        return "redirect:/wishlist/profile";
     }
 
     @PostMapping("{id}/delete")
@@ -112,5 +112,18 @@ public class WishlistController {
         return "redirect:/wishlist/list";
     }
 
+    //Mangler connection mellem html, muligvis ikke nødvendigt, og kan tilkobles til en anden controller.
+    @PostMapping("/search")
+    public String searchWish(@RequestParam String name, Model model){
+        Wish wish = wishlistService.searchWish(name);
 
+        if (wish == null){
+            model.addAttribute("error", "Der blev ikke fundet et ønske med navnet: " + name);
+            return "profile"; //Måske en anden
+        }
+
+        model.addAttribute("wish", wish);
+        return "profile"; //ÆNDRE TIL NOGET MERE RELAVANT, måske en ny html? Evt en wishDetails.html
+                          //
+    }
 }
