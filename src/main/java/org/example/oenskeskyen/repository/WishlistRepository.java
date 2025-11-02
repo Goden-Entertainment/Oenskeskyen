@@ -5,9 +5,13 @@ import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -33,7 +37,7 @@ public class WishlistRepository {
 
     }
 
-    public void testData(){
+    public void testData() {
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
@@ -49,10 +53,10 @@ public class WishlistRepository {
     }
 
 
-    public void addUser(User user){
-        String sqlAddUser = "INSERT INTO users (username, password, id, email, wishlist) values (?,?,?,?,?)";
+    public void addUser(User user) {
+        String sqlAddUser = "INSERT INTO users (username, password, email) values (?,?,?)";
 
-        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail(), user.getId(), user.getWishlist());
+        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail());
 
     }
 
@@ -64,7 +68,7 @@ public class WishlistRepository {
         );
     }
 
-//Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
+    //Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
     public List<Wish> getWishes(int id) {
         String sqlGet = "SELECT * FROM wishes";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
@@ -105,7 +109,7 @@ public class WishlistRepository {
     public int deletewish(int id) throws DataAccessException {
         String sqlDel = "DELETE FROM wishes where id = ? ";
 
-        return  jdbcTemplate.update(sqlDel, id);
+        return jdbcTemplate.update(sqlDel, id);
     }
 
     public Wish serchWish(String name) {

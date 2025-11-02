@@ -27,12 +27,22 @@ public class WishlistController {
     public String addUser(@ModelAttribute Model model) {
         wishlistService.addUser(user);
 
+        model.addAttribute("signup", user);
         return "signup";
     }
 
+    @PostMapping("/save")
+    public String saveUser(@ModelAttribute User user) {
+        wishlistService.addUser(user);
+
+        return "redirect:/wishlist/profile";
+
+    }
+
+
     @GetMapping("profile")
     public String showProfile(Model model) {
-        model.addAttribute("wishlist", wishlistService.getWishList());
+        //model.addAttribute("wishlist", wishlistService.getWishList());
 
         //henter alle ønskelister
         List<WishList> wishLists = wishlistService.getWishList();
