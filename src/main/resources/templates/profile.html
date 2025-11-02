@@ -1,13 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>Velkommen til din profil</h1>
-    <h4>Spend some dollars babyyyyy</h4>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}" href="/css/profile.css" />
 </head>
 <body>
+
+<!-- Navigation top -->
+<header class="nav">
+    <div class="nav__left">
+        <span class="logo" aria-hidden="true">🎁</span>
+        <span class="brand">Oenskeskyen</span>
+    </div>
+    <nav class="nav__right">
+        <a class="btn btn-ghost" href="/" th:href="@{/}">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+    <!-- Profile card -->
+    <section class="card">
+        <div class="card__head">
+            <h1>Your Profile</h1>
+        </div>
+        <div class="card__body profile-info">
+            <div class="profile-avatar">
+                <img class="avatar" src="/images/stickman2.jpg" alt="Profile picture" />
+            </div>
+            <div class="profile-details">
+                <div class="detail">
+                    <label>Username</label>
+                    <p class="text" th:text="${user?.username}">jane_doe</p>
+                </div>
+                <div class="detail">
+                    <label>Email</label>
+                    <p class="text" th:text="${user?.email}">jane@example.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wishlist card -->
+    <section class="card">
+        <div class="card__head">
+            <h2>My Wishlists</h2>
+            <span class="count" th:text="${list != null ? list.size() : 0} + ' Wishlists'">0 Wishlists</span>
+        </div>
+
+        <div class="card__body">
+            <!-- Skal sættes videre til "edit, tror jeg" -->
+            <div class="create-static">
+                <a class="btn btn-primary" href="/wishlists/create" th:href="@{/wishlists/create}">Add Wishlist</a>
+            </div>
+
+            <!-- Wishlist list -->
+            <ul class="list" th:if="${list != null and !#lists.isEmpty(list)}" th:each="w : ${list}">
+                <li class="item">
+                    <div class="item__main">
+                        <div class="item__title" th:text="${w.name}">Wishlist name</div>
+                        <div class="item__meta">
+                            <span>Wishlist</span>
+                        </div>
+                    </div>
+                    <div class="item__actions">
+                        <a class="btn btn-link" th:href="@{'/wishlists/' + ${w.id} + '/edit'}">Edit</a>
+                        <form th:action="@{'/wishlists/' + ${w.id} + '/delete'}" method="post">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Besked, hvis der ikke er en wishlist-->
+            <p th:if="${list == null or #lists.isEmpty(list)}" class="empty-msg">
+                You don’t have any wishlists yet.
+            </p>
+        </div>
+    </section>
+</main>
 
 </body>
 </html>

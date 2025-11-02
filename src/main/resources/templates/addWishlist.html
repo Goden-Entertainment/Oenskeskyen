@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Wishlist</title>
+    <link rel="stylesheet" th:href="@{/css/add-wishlist.css}" />
 </head>
 <body>
+<section class="add-wishlist" aria-labelledby="add-wishlist-title">
+    <div class="add-wishlist__card" role="dialog" aria-modal="true" aria-labelledby="add-wishlist-title">
+        <header class="add-wishlist__header">
+            <h2 id="add-wishlist-title">Create a wishlist</h2>
+            <p class="add-wishlist__sub">Give your wishlist a clear name so friends and Yadii can find it.</p>
+        </header>
 
+        <form class="add-wishlist__form" th:action="@{/wishlists/add}" method="post" novalidate>
+            <div class="field">
+                <label for="wishlist-name">Wishlist name</label>
+                <input
+                        id="wishlist-name"
+                        name="name"
+                        type="text"
+                        placeholder="Hvad laver dog?"
+                        autocomplete="off"
+                        required
+                        maxlength="80"
+                />
+                <small class="field__hint">80 characters max</small>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn--primary" type="submit">Add wishlist</button>
+                <button class="btn btn--ghost" type="button" onclick="window.location.href='/profile'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</section>
 </body>
 </html>
