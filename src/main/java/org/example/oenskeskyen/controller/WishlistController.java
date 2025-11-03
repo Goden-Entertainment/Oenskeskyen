@@ -62,7 +62,7 @@ public class WishlistController {
         System.out.println(wishList);
         System.out.println(wishes);
         //SERCH WISH FUNKTIONEN MANGLER
-        return "myWishList";
+        return "myWishlist";
     }
 
 
