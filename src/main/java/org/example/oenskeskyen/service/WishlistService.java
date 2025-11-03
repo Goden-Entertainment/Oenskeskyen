@@ -68,4 +68,8 @@ public class WishlistService {
     }
 
 
+    public User getUserByEmailAndPassword(String email, String password) {
+        return wishlistRepository.getUserByEmailAndPassword(email, password);
+    }
+
 }

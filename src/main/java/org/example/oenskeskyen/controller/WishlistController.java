@@ -39,16 +39,16 @@ public class WishlistController {
 
     }
 
-
-    @GetMapping("profile")
-    public String showProfile(Model model) {
-        //model.addAttribute("wishlist", wishlistService.getWishList());
-
-        //henter alle ønskelister
-        List<WishList> wishLists = wishlistService.getWishList();
-        model.addAttribute("list", wishLists);
-        return "profile";
-    }
+    //Tror ikke vi skal bruge nedenstående mere
+//    @GetMapping("profile")
+//    public String showProfile(Model model) {
+//        //model.addAttribute("wishlist", wishlistService.getWishList());
+//
+//        //henter alle ønskelister
+//        List<WishList> wishLists = wishlistService.getWishList();
+//        model.addAttribute("list", wishLists);
+//        return "profile";
+//    }
 
 
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???

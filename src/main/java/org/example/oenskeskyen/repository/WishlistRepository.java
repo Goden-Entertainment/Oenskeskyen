@@ -62,9 +62,13 @@ public class WishlistRepository {
 
     //Her
     public List<WishList> getWishList() {
-        String sqlGet = "SELECT * FROM wishlist";
+        String sqlGet = "SELECT id, name FROM wishlist";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
-                new WishList(rs.getString("name"))
+                new WishList(
+                        rs.getInt("id"),
+                        (rs.getString("name")
+                        )
+                )
         );
     }
 
@@ -124,5 +128,31 @@ public class WishlistRepository {
                         rs.getInt("id"),
                         rs.getString("description"))
         );
+    }
+
+    //Metode tiføjet til at finde en bruger i databasen ud fra email + password
+    public User getUserByEmailAndPassword(String email, String password) {
+        String sql = """
+        SELECT id, username, password, email
+        FROM users
+        WHERE LOWER(email) = LOWER(?) AND password = ?
+        LIMIT 1
+    """;
+
+        try {
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+                            new User(
+                                    rs.getString("username"),
+                                    rs.getString("password"),
+                                    rs.getInt("id"),
+                                    null, // ingen wishlist
+                                    rs.getString("email")
+                            ),
+                    email, password
+            );
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            // Ingen bruger fundet returner null
+            return null;
+        }
     }
 }
