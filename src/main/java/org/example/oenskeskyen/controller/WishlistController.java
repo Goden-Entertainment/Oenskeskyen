@@ -27,19 +27,28 @@ public class WishlistController {
     public String addUser(Model model) {
         User user = new User();
 
-        model.addAttribute("signup", wishlistService.addUser(user));
+        model.addAttribute("signup", user);
         return "signup";
     }
 
-    @GetMapping("profile")
-    public String showProfile(Model model) {
-        model.addAttribute("wishlist", wishlistService.getWishList());
+    @PostMapping("/save")
+    public String saveUser(@ModelAttribute User user) {
+        wishlistService.addUser(user);
 
-        //henter alle ønskelister
-        List<WishList> wishLists = wishlistService.getWishList();
-        model.addAttribute("list", wishLists);
-        return "profile";
+        return "redirect:/wishlist/profile";
+
     }
+
+    //Tror ikke vi skal bruge nedenstående mere
+//    @GetMapping("profile")
+//    public String showProfile(Model model) {
+//        //model.addAttribute("wishlist", wishlistService.getWishList());
+//
+//        //henter alle ønskelister
+//        List<WishList> wishLists = wishlistService.getWishList();
+//        model.addAttribute("list", wishLists);
+//        return "profile";
+//    }
 
 
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
@@ -60,7 +69,7 @@ public class WishlistController {
     public String updateWish(@PathVariable int id, Model model) {
         Wish wish = (Wish) wishlistService.getWishes(id);
         if (wish == null) {
-            throw new IllegalArgumentException("erro, invalid wish name");
+            throw new IllegalArgumentException("error, invalid wish name");
         }
         model.addAttribute("wish", wish);
 

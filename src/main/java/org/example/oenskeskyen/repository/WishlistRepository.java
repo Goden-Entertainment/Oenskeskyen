@@ -5,9 +5,13 @@ import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -33,7 +37,7 @@ public class WishlistRepository {
 
     }
 
-    public void testData(){
+    public void testData() {
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
@@ -49,23 +53,25 @@ public class WishlistRepository {
     }
 
 
-    public List<User> addUser(User user){
-        String sqlAddUser = "INSERT INTO users (username, password, id, email, wishlist) values (?,?,?,?,?)";
+    public void addUser(User user) {
+        String sqlAddUser = "INSERT INTO users (username, password, email) values (?,?,?)";
 
-        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail(), user.getId(), user.getWishlist());
+        jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail());
 
-        //Skal den stå tom eller er dette rigtigt?
-        return List.of(user);
     }
 
     public List<WishList> getWishList() {
-        String sqlGet = "SELECT * FROM wishlist";
+        String sqlGet = "SELECT id, name FROM wishlist";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
-                new WishList(rs.getString("name"))
+                new WishList(
+                        rs.getInt("id"),
+                        (rs.getString("name")
+                        )
+                )
         );
     }
 
-//Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
+    //Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
     public List<Wish> getWishes(int id) {
         String sqlGet = "SELECT * FROM wishes";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
@@ -103,7 +109,7 @@ public class WishlistRepository {
     public int deletewish(int id) throws DataAccessException {
         String sqlDel = "DELETE FROM wishes where id = ? ";
 
-        return  jdbcTemplate.update(sqlDel, id);
+        return jdbcTemplate.update(sqlDel, id);
     }
 
     public Wish serchWish(int id) {
@@ -120,5 +126,29 @@ public class WishlistRepository {
         );
     }
 
+    //Metode tiføjet til at finde en bruger i databasen ud fra email + password
+    public User getUserByEmailAndPassword(String email, String password) {
+        String sql = """
+        SELECT id, username, password, email
+        FROM users
+        WHERE LOWER(email) = LOWER(?) AND password = ?
+        LIMIT 1
+    """;
 
+        try {
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+                            new User(
+                                    rs.getString("username"),
+                                    rs.getString("password"),
+                                    rs.getInt("id"),
+                                    null, // ingen wishlist
+                                    rs.getString("email")
+                            ),
+                    email, password
+            );
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            // Ingen bruger fundet returner null
+            return null;
+        }
+    }
 }
