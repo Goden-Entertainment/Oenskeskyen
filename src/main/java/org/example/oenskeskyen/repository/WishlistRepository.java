@@ -33,7 +33,7 @@ public class WishlistRepository {
     public void makeTable() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255))");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))");
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255), wishlistKey INT)");
 
     }
 
@@ -48,8 +48,8 @@ public class WishlistRepository {
         jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?)", "Druid Ønskeliste");
         jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?)", "Unc");
 
-        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description) VALUES (?, ?, ?, ?)", "Brøndbil", "250 kr.", "www.yadi.com", "Den skal være rød");
-        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description) VALUES (?, ?, ?, ?)", "Tshirt H&M", "450 kr.", "august.com", "Den skal være i M og sort");
+        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Brøndbil", "250 kr.", "www.yadi.com", "Den skal være rød", 1);
+        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Tshirt H&M", "450 kr.", "august.com", "Den skal være i M og sort", 1);
     }
 
 
@@ -81,7 +81,8 @@ public class WishlistRepository {
                         rs.getDouble("price"),
                         rs.getString("link"),
                         rs.getInt("id"),
-                        rs.getString("description")
+                        rs.getString("description"),
+                        rs.getInt("wishlistKey")
                 )
         );
     }
@@ -90,6 +91,17 @@ public class WishlistRepository {
     public void addWishList(WishList wishList) {
         String sqlAdd = "INSERT INTO wishlist (name) values(?)";
         jdbcTemplate.update(sqlAdd, wishList.getName());
+    }
+
+    public WishList serchWishList(int id) {
+        String sqlSearch = "SELECT * FROM wishes WHERE id = ?";
+
+
+        return jdbcTemplate.queryForObject(sqlSearch, new Object[]{id}, (rs, rowNum) ->
+                new WishList(
+                        rs.getInt("id"),
+                        rs.getString("name")
+        ));
     }
 
     //Test
@@ -126,7 +138,9 @@ public class WishlistRepository {
                         rs.getDouble("price"),
                         rs.getString("link"),
                         rs.getInt("id"),
-                        rs.getString("description"))
+                        rs.getString("description"),
+                        rs.getInt("wishlistKey")
+                )
         );
     }
 

@@ -52,14 +52,15 @@ public class WishlistController {
 
 
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
-    @GetMapping("wishList")
-    public String myWishList(Model model, int id) {
-        model.addAttribute("myWishList", wishlistService.getWishes(id));
-
-        //Det forneden forkommer også i linje 108
-        Wish newWish = new Wish();
-        model.addAttribute("addWishForm", newWish);
-
+    @GetMapping("myWishList/{id}")
+    public String myWishList(Model model, @PathVariable int id) {
+        System.out.println(id);
+        WishList wishList = wishlistService.searchWishList(id);
+        List<Wish> wishes = wishlistService.getWishes(id);
+        model.addAttribute("myWishList", wishList);
+        model.addAttribute("wishes", wishes);
+        System.out.println(wishList);
+        System.out.println(wishes);
         //SERCH WISH FUNKTIONEN MANGLER
         return "myWishList";
     }
@@ -83,7 +84,6 @@ public class WishlistController {
 
         return "redirect: /profile";
     }
-
 
     //Kig denne metode igennem
     @GetMapping("/addWishListForm")

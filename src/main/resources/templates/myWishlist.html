@@ -5,23 +5,35 @@
     <title>Title</title>
     <script>
         function myFunction() {
-            navigator.clipboard.writeText("http://localhost:8080/wishlist/wishList");
+            navigator.clipboard.writeText(document.URL);
         }
     </script>
+    <style>
+        .wishlist {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .wish{
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <h1 th:text=" ønskeliste"></h1>
 <div>
     <h2 th:text="username"></h2>
     <button onclick="myFunction()">Share</button>
-    <button th:href="" th:text="Delete"></button>
-    <button th:href="" th:text="Update"></button>
-    <button th:href="" th:text="Add"></button>
 </div>
-<div th:each="">
-    <div>
-        <p th:text="Description"></p>
-        <p th:text="price"></p>
+<div class="wishlist">
+    <div class="wish" th:each="wish : ${wishes}">
+        <p th:text="${wish.name}"></p>
+        <p th:text="${wish.description}"></p>
+        <a th:href="@{${wish.link}}" th:text="${wish.link}"></a>
+        <p th:text="${wish.price}"></p>
     </div>
 </div>
 </body>

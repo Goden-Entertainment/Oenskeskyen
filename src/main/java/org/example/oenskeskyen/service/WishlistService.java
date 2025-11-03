@@ -41,6 +41,10 @@ public class WishlistService {
         wishlistRepository.addWishList(wishList);
     }
 
+    public WishList searchWishList(int id){
+        return wishlistRepository.serchWishList(id);
+    }
+
     public void addWish(Wish wish) {
         wishlistRepository.addWish(wish);
     }

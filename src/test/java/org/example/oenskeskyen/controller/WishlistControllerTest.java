@@ -38,8 +38,8 @@ public class WishlistControllerTest {
     @Test
     void shouldGetAllWishes() throws Exception{
         int id = 1;
-        Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil");
-        when(wishlistService.getWishes()).thenReturn(List.of(wishTest));
+        Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil", 1);
+        when(wishlistService.getWishes(1)).thenReturn(List.of(wishTest));
 
         mockMvc.perform(get("/wishlist/wishList").param("id", String.valueOf(id)))
                 .andExpect(status().isOk())
@@ -59,7 +59,7 @@ public class WishlistControllerTest {
     @Test
     void shouldUpdateWish() throws Exception {
 
-        Wish wishTest = new Wish("T-shirt", 350, "www.link.dk", 1, "Sort tshirt i M");
+        Wish wishTest = new Wish("T-shirt", 350, "www.link.dk", 1, "Sort tshirt i M", 1);
         when(wishlistService.searchWish("T-shirt")).thenReturn(wishTest);
 
         mockMvc.perform(post("/wishlist/T-shirt/update"))

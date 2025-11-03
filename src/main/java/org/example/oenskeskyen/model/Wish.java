@@ -6,13 +6,15 @@ public class Wish {
     private String link;
     private int id;
     private String description;
+    private int wishlistKey;
 
-    public Wish(String name, double price, String link, int id, String description) {
+    public Wish(String name, double price, String link, int id, String description, int wishlistKey) {
         this.name = name;
         this.price = price;
         this.link = link;
         this.id = id;
         this.description = description;
+        this.wishlistKey = wishlistKey;
     }
 
     public Wish() {
@@ -58,5 +60,9 @@ public class Wish {
         this.description = description;
     }
 
+    @Override
+    public String toString(){
+        return id + " " + name;
+    }
 }
 
