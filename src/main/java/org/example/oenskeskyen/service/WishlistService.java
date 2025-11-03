@@ -63,8 +63,8 @@ public class WishlistService {
         // wishlistRepository.deletewish(id);
     }
 
-    public Wish serchWish(int id) {
-        return wishlistRepository.serchWish(id);
+    public Wish searchWish(String name) {
+        return wishlistRepository.serchWish(name);
     }
 
 
