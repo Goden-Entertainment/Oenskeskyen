@@ -24,8 +24,8 @@ public class WishlistController {
     }
 
     @GetMapping("addUser")
-    public String addUser(@ModelAttribute Model model) {
-        wishlistService.addUser(user);
+    public String addUser(Model model) {
+        User user = new User();
 
         model.addAttribute("signup", user);
         return "signup";
@@ -65,16 +65,15 @@ public class WishlistController {
     }
 
 
-    @PostMapping("/{name}/update")
-    public String updateWish(@PathVariable String name, Model model) {
-        Wish wish = (Wish) wishlistService.searchWish(name);
-
+    @PostMapping("/{id}/update")
+    public String updateWish(@PathVariable int id, Model model) {
+        Wish wish = (Wish) wishlistService.getWishes(id);
         if (wish == null) {
             throw new IllegalArgumentException("error, invalid wish name");
         }
         model.addAttribute("wish", wish);
 
-        return "redirect:/wishlist/profile";
+        return "redirect: /profile";
     }
 
     @PostMapping("{id}/delete")
@@ -86,34 +85,29 @@ public class WishlistController {
 
 
     //Kig denne metode igennem
-    @GetMapping("/addWishListForm")
+    @GetMapping("/addWishlist")
     public String addWishlist(Model model) {
 
-
-        WishList newWishList = new WishList("halla");
-        model.addAttribute("wishlist", newWishList);
+        WishList newWishList = new WishList();
+        model.addAttribute("addWishlist", newWishList);
 
         //  wishlistService.addWishList(newWishList);
-        return "addWishListForm";
+        return "addWishlist";
     }
 
-    @PostMapping("/addWishList")
+    @PostMapping("/addWishlist")
     public String saveWishList(WishList wishList) {
         wishlistService.addWishList(wishList);
-        return "redirect:/wishlist/list";
+        return "redirect:/profile";
     }
 
 
     @GetMapping("/addWish")
     public String addWish(Model model) {
         Wish newWish = new Wish();
-        model.addAttribute("addWishForm", newWish);
-//        model.addAttribute("price", newWish);
-//        model.addAttribute("link", newWish);
-//        model.addAttribute("id", newWish);
-//        model.addAttribute("description", newWish);
+        model.addAttribute("addGift", newWish);
 
-        return "addWishForm";
+        return "addGift";
     }
 
     @PostMapping("/addWish")
@@ -122,18 +116,5 @@ public class WishlistController {
         return "redirect:/wishlist/list";
     }
 
-    //Mangler connection mellem html, muligvis ikke nødvendigt, og kan tilkobles til en anden controller.
-    @PostMapping("/search")
-    public String searchWish(@RequestParam String name, Model model){
-        Wish wish = wishlistService.searchWish(name);
 
-        if (wish == null){
-            model.addAttribute("error", "Der blev ikke fundet et ønske med navnet: " + name);
-            return "profile"; //Måske en anden
-        }
-
-        model.addAttribute("wish", wish);
-        return "profile"; //ÆNDRE TIL NOGET MERE RELAVANT, måske en ny html? Evt en wishDetails.html
-                          //
-    }
 }
