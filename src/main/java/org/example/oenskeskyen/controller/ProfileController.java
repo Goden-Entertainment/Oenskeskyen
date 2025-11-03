@@ -1,5 +1,6 @@
 package org.example.oenskeskyen.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.WishList;
 import org.example.oenskeskyen.service.WishlistService;
@@ -29,7 +30,7 @@ public class ProfileController {
     @PostMapping("/signin")
     public String signup(@RequestParam String email,
                          @RequestParam String password,
-                         jakarta.servlet.http.HttpSession session,
+                         HttpSession session,
                          org.springframework.ui.Model model) {
         try {
             User user = wishlistService.getUserByEmailAndPassword(email, password);
@@ -61,7 +62,7 @@ public class ProfileController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(jakarta.servlet.http.HttpSession session, org.springframework.ui.Model model) {
+    public String showProfile(HttpSession session, org.springframework.ui.Model model) {
         User user = (User) session.getAttribute("currentUser");
         if (user == null) {
             // Hvis man ikke er logget ind, så tilbage til signin
