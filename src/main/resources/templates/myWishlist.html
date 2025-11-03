@@ -15,6 +15,7 @@
     <h2 th:text="username"></h2>
     <button onclick="myFunction()">Share</button>
 </div>
+
 <div class="wishlist">
     <div class="wish" th:each="wish : ${wishes}">
         <p th:text="${wish.name}"></p>
