@@ -25,12 +25,12 @@ public class WishlistRepository {
 
         this.jdbcTemplate = jdbcTemplate;
 
-        makeTabel();
+        makeTable();
         testData();
     }
 
     //opmærksom på hvordan wishes er skrevet op
-    public void makeTabel() {
+    public void makeTable() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255))");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255))");
@@ -60,6 +60,7 @@ public class WishlistRepository {
 
     }
 
+    //Her
     public List<WishList> getWishList() {
         String sqlGet = "SELECT id, name FROM wishlist";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
@@ -85,11 +86,13 @@ public class WishlistRepository {
         );
     }
 
+    //test
     public void addWishList(WishList wishList) {
         String sqlAdd = "INSERT INTO wishlist (name) values(?)";
         jdbcTemplate.update(sqlAdd, wishList.getName());
     }
 
+    //Test
     public void addWish(Wish wish) {
         String sqlAdd = "INSERT INTO wishes (name, link, price ) values (?,?,?)";
         jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice());
@@ -106,17 +109,18 @@ public class WishlistRepository {
 
     }
 
+    //
     public int deletewish(int id) throws DataAccessException {
         String sqlDel = "DELETE FROM wishes where id = ? ";
 
         return jdbcTemplate.update(sqlDel, id);
     }
 
-    public Wish serchWish(int id) {
-        String sqlSerch = "SELECT * FROM wishes WHERE id = ?";
+    public Wish serchWish(String name) {
+        String sqlSearch = "SELECT * FROM wishes WHERE name = ?";
 
 
-        return jdbcTemplate.queryForObject(sqlSerch, (rs, rowNum) ->
+        return jdbcTemplate.queryForObject(sqlSearch, new Object[]{name}, (rs, rowNum) ->
                 new Wish(
                         rs.getString("name"),
                         rs.getDouble("price"),
