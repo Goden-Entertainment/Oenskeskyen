@@ -61,16 +61,18 @@ public class WishlistRepository {
     }
 
     //Her
-    public List<WishList> getWishList() {
-        String sqlGet = "SELECT id, name, userKey FROM wishlist";
+    public List<WishList> getWishList(String userKey) {
+        String sqlGet = "SELECT id, name, userKey FROM wishlist WHERE userKey = ? ";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
                 new WishList(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("userKey")
                 )
+                , userKey
         );
     }
+
 
     //Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
     public List<Wish> getWishes() {
