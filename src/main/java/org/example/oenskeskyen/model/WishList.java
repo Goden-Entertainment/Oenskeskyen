@@ -39,6 +39,14 @@ public class WishList {
         this.name = name;
     }
 
+    public String getUserKey(){
+        return  userKey;
+    }
+
+    public void setUserKey(String userKey){
+        this.userKey = userKey;
+    }
+
     @Override
     public String toString(){
         return id + " " +name;
