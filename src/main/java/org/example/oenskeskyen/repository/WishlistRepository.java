@@ -73,7 +73,7 @@ public class WishlistRepository {
     }
 
     //Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
-    public List<Wish> getWishes(int id) {
+    public List<Wish> getWishes() {
         String sqlGet = "SELECT * FROM wishes";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
                 new Wish(
@@ -106,8 +106,8 @@ public class WishlistRepository {
 
     //Test
     public void addWish(Wish wish) {
-        String sqlAdd = "INSERT INTO wishes (name, link, price ) values (?,?,?)";
-        jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice());
+        String sqlAdd = "INSERT INTO wishes (name, link, price, description, wishlistKey) values (?,?,?,?,?)";
+        jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice(), wish.getDescription()); //wish.getWishlistKey());
     }
 
 
