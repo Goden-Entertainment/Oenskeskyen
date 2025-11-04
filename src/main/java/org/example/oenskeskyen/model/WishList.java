@@ -4,6 +4,7 @@ public class WishList {
 
     private int id;
     private String name;
+    private String userKey;
 
     //Til framework
     public WishList() {
@@ -15,9 +16,10 @@ public class WishList {
         this.name = name;
     }
 
-    public WishList(int id, String name) {
+    public WishList(int id, String name, String userKey) {
         this.id = id;
         this.name = name;
+        this.userKey = userKey;
     }
 
 
