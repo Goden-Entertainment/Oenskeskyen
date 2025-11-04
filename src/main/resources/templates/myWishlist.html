@@ -47,6 +47,13 @@
                 <p th:text="${wish.description}">Description</p>
                 <a th:href="${wish.link}" th:text="${wish.link}" target="_blank" rel="noopener">Link</a>
                 <p th:text="${wish.price} + ' dkk'"></p>
+
+                <!--Det første er placeholders, og så bagefter henter du data'en som skal sættes ind. Så det bliver fx /wishlist/4/delete/11.
+                controlleren modtager wishlistId og wishId fra dem her.-->
+                <form th:action="@{/wishlist/{wishlistId}/delete/{wishId}(wishlistId=${myWishList.id}, wishId=${wish.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
             </div>
         </div>
     </section>

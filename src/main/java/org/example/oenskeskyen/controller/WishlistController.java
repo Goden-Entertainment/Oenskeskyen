@@ -45,7 +45,7 @@ public class WishlistController {
     @GetMapping("myWishList/{id}")
     public String myWishList(Model model, @PathVariable int id) {
         WishList wishList = wishlistService.searchWishList(id);
-        List<Wish> wishes = wishlistService.getWishes();
+        List<Wish> wishes = wishlistService.getWishesByWishlistId(id);
         model.addAttribute("myWishList", wishList);
         model.addAttribute("wishes", wishes);
         return "myWishlist";
@@ -63,12 +63,14 @@ public class WishlistController {
         return "redirect: /profile";
     }
 
-    @PostMapping("{id}/delete")
-    public String deleteWish(@PathVariable int id) {
-        wishlistService.deletewish(id);
-
-        return "redirect: /profile";
+    //wishlistId = Id så vi kan komme tilbage til listen. wishId = id'et vi vil slette. 3/delete/5 fx.
+    @PostMapping("/{wishlistId}/delete/{wishId}")
+    public String deleteWish(@PathVariable int wishlistId,
+                             @PathVariable int wishId) {
+        wishlistService.deletewish(wishId);
+        return "redirect:/wishlist/myWishList/" + wishlistId;
     }
+
 
     //Kig denne metode igennem
     @GetMapping("/addWishlist/{username}")

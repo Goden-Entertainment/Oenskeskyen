@@ -74,9 +74,9 @@ public class WishlistRepository {
     }
 
 
-    //Tilkobel den specifikke ønskeliste til de forskellige ønsker !!!!!
-    public List<Wish> getWishes() {
-        String sqlGet = "SELECT * FROM wishes";
+    //Lavet navn om, den tager en wishlistId, så vi får den specifikke ønskeliste til den specifikke bruger, bed brug af WHERE
+    public List<Wish> getWishesByWishlistId(int wishlistId) {
+        String sqlGet = "SELECT * FROM wishes WHERE wishlistKey = ?";
         return jdbcTemplate.query(sqlGet, (rs, rowNum) ->
                 new Wish(
                         rs.getString("name"),
@@ -85,7 +85,10 @@ public class WishlistRepository {
                         rs.getInt("id"),
                         rs.getString("description"),
                         rs.getInt("wishlistKey")
-                )
+                ),
+                //Dette er WHERE = ? i SQL'en, hvor fx hvis værdien er 3 så bliver det sat ind i '?'
+                //Står bagefter fordi det er en del af SQL'en og ikke new wish object.
+                wishlistId
         );
     }
 
