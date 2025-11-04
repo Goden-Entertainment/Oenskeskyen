@@ -95,7 +95,7 @@ public class WishlistController {
     }
 
 
-    @GetMapping("/addWish")
+    @GetMapping("/addWish/{id}")
     public String addWish(Model model) {
         Wish newWish = new Wish();
         model.addAttribute("addGift", newWish);
