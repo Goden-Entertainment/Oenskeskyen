@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>hejsa</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Wishlist</title>
+    <link rel="stylesheet" th:href="@{/css/MyWishlist.css}" />
+
+    <!-- JavaScript til share knappen og alert -->
     <script>
         function myFunction() {
             navigator.clipboard.writeText(document.URL);
+            alert("Link copied to clipboard!")
         }
     </script>
-    <style>
-        .wishlist {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .wish {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-
-    </style>
 </head>
-<h1>Hejsa</h1>
-<body>
-<h1 th:text=" ønskeliste"></h1>
-<div>
-    <h2 th:text="username"></h2>
-    <button onclick="myFunction()">Share</button>
-</div>
 
-<div class="wishlist">
-    <div class="wish" th:each="wish : ${wishes}">
-        <p th:text="${wish.name}"></p>
-        <p th:text="${wish.description}"></p>
-        <a th:href="@{${wish.link}}" th:text="${wish.link}"></a>
-        <p th:text="${wish.price}"></p>
+<body>
+<header class="nav">
+    <div class="nav__left">
+        <span class="logo" aria-hidden="true">🎁</span>
+        <span class="brand">Oenskeskyen</span>
     </div>
-</div>
+    <div class="nav__right">
+        <a class="btn" th:href="@{/}">Logout</a>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card">
+        <div class="header">
+            <div>
+                <h1 th:text="'Ønskeliste'">Ønskeliste</h1>
+            </div>
+            <button class="btn btn-primary" onclick="myFunction()">Share</button>
+        </div>
+
+        <div class="wishlist">
+            <div class="wish" th:each="wish : ${wishes}">
+                <h3 th:text="${wish.name}">Item name</h3>
+                <p th:text="${wish.description}">Description</p>
+                <a th:href="${wish.link}" th:text="${wish.link}" target="_blank" rel="noopener">Link</a>
+                <p th:text="${wish.price}">0</p>
+            </div>
+        </div>
+    </section>
+</main>
+
 </body>
 </html>
