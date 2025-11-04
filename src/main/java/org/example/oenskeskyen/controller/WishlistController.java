@@ -56,7 +56,7 @@ public class WishlistController {
     public String myWishList(Model model, @PathVariable int id) {
         System.out.println(id);
         WishList wishList = wishlistService.searchWishList(id);
-        List<Wish> wishes = wishlistService.getWishes(id);
+        List<Wish> wishes = wishlistService.getWishes();
         model.addAttribute("myWishList", wishList);
         model.addAttribute("wishes", wishes);
         System.out.println(wishList);
