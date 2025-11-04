@@ -73,10 +73,22 @@
                 </li>
             </ul>
 
+
             <!-- Besked, hvis der ikke er en wishlist-->
             <p th:if="${list == null or #lists.isEmpty(list)}" class="empty-msg">
                 You don’t have any wishlists yet.
             </p>
+
+
+
+            <ul>
+                <li th:each="wishlist : ${wishlists}">
+                    <!-- Link til en detaljeret side for den enkelte ønskeliste -->
+                    <a th:href="@{/wishlist/myWishList/{id}(id=${wishlist.id})}" th:text="${wishlist.name}">Ønskeliste Navn</a>
+                </li>
+            </ul>
+
+
         </div>
     </section>
 </main>
