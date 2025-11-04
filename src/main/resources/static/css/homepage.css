@@ -65,7 +65,6 @@ body {
 }
 .btn-outline:hover { background: #f8fafc; }
 
-/* Hero */
 .hero {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -100,7 +99,7 @@ body {
     object-fit: cover;
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .hero-image { order: 2; }

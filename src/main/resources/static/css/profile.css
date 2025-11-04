@@ -130,7 +130,7 @@ body {
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-danger:hover { filter: brightness(.95); }
 
-/* Static create button */
+/*  create button */
 .create-static {
     display: flex;
     justify-content: flex-end;
