@@ -105,6 +105,6 @@ public class WishlistController {
     @PostMapping("/addWish")
     public String saveWish(Wish wish) {
         wishlistService.addWish(wish);
-        return "redirect:/wishlist/myWishList/{id}";
+        return "redirect:/wishlist/myWishList/" + wish.getWishlistKey();
     }
 }

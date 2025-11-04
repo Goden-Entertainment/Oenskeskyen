@@ -44,7 +44,7 @@
                 <h3 th:text="${wish.name}">Item name</h3>
                 <p th:text="${wish.description}">Description</p>
                 <a th:href="${wish.link}" th:text="${wish.link}" target="_blank" rel="noopener">Link</a>
-                <p th:text="${wish.price}">0</p>
+                <p th:text="${wish.price} + ' dkk'"></p>
             </div>
         </div>
     </section>
