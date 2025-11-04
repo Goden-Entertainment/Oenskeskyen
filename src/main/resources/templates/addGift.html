@@ -24,7 +24,7 @@
     <label for="description">Beskriv dit ønske</label><br>
     <textarea id="description" name="description" placeholder="Det skal være den røde brændbil."></textarea><br><br>
 
-    <input type="hidden" name="wishlistKey" th:value="${addGift.wishlistKey}"/>
+    <input type="hidden" name="wishlistKey" th:value="${addGift.getWishlistKey()}"/>
 
     <button type="submit">Lav Ønske</button>
     <a href="/wishlist/profile" class="btn btn--ghost">Cancel</a>
