@@ -43,10 +43,10 @@ public class WishlistRepository {
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
         jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
 
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?, ?)", "Godens Ønskeliste", "Goden");
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?, ?)", "Yadis ønskeliste", "Yadiii");
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?, ?)", "Druid Ønskeliste", "RuneDog");
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name) VALUES (?, ?)", "Unc", "Unc");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?, ?)", "Godens Ønskeliste", "Goden");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?, ?)", "Yadis ønskeliste", "Yadiii");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?, ?)", "Druid Ønskeliste", "RuneDog");
+        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?, ?)", "Unc", "Unc");
 
         jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Brøndbil", "250 kr.", "www.yadi.com", "Den skal være rød", 1);
         jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Tshirt H&M", "450 kr.", "august.com", "Den skal være i M og sort", 1);
