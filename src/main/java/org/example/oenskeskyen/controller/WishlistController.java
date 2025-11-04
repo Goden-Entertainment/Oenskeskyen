@@ -88,7 +88,6 @@ public class WishlistController {
     @PostMapping("/addWishlist")
     public String saveWishList(WishList wishList) {
 
-        System.out.println(wishList.getUserKey());
 
         wishlistService.addWishList(wishList);
         return "redirect:/profile";
