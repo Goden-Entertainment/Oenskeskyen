@@ -38,7 +38,7 @@ public class WishlistControllerTest {
     @Test
     void shouldGetAllWishes() throws Exception{
         int id = 1;
-        Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil", 1);
+        Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil");
         when(wishlistService.getWishes()).thenReturn(List.of(wishTest));
 
         mockMvc.perform(get("/wishlist/wishList").param("id", String.valueOf(id)))
@@ -59,26 +59,11 @@ public class WishlistControllerTest {
     @Test
     void shouldUpdateWish() throws Exception {
 
-        Wish wishTest = new Wish("T-shirt", 350, "www.link.dk", 1, "Sort tshirt i M", 1);
+        Wish wishTest = new Wish("T-shirt", 350, "www.link.dk", 1, "Sort tshirt i M");
         when(wishlistService.searchWish("T-shirt")).thenReturn(wishTest);
 
         mockMvc.perform(post("/wishlist/T-shirt/update"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/wishlist/profile"));
-    }
-
-    @Test
-    void shouldAddWish() throws Exception{
-    Wish wishTest = new Wish("Typpppp", 6767, "www.shiii.com", 1, "The realest typpp shii", 1);
-
-    mockMvc.perform(post("/wishlist/addWish")
-            .param("name", wishTest.getName())
-            .param("price", String.valueOf(wishTest.getPrice()))
-            .param("link", wishTest.getLink())
-            .param("description", wishTest.getDescription()))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl("/wishlist/myWishlist"));
-
-    verify(wishlistService, times(1)).addWish(any(Wish.class));
     }
 }

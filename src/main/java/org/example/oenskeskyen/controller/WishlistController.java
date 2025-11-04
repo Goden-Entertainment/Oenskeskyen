@@ -24,8 +24,8 @@ public class WishlistController {
     }
 
     @GetMapping("addUser")
-    public String addUser(@ModelAttribute Model model) {
-        wishlistService.addUser(user);
+    public String addUser(Model model) {
+        User user = new User();
 
         model.addAttribute("signup", user);
         return "signup";
@@ -39,16 +39,6 @@ public class WishlistController {
 
     }
 
-    //Tror ikke vi skal bruge nedenstående mere
-//    @GetMapping("profile")
-//    public String showProfile(Model model) {
-//        //model.addAttribute("wishlist", wishlistService.getWishList());
-//
-//        //henter alle ønskelister
-//        List<WishList> wishLists = wishlistService.getWishList();
-//        model.addAttribute("list", wishLists);
-//        return "profile";
-//    }
 
 
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
@@ -62,16 +52,15 @@ public class WishlistController {
     }
 
 
-    @PostMapping("/{name}/update")
+    @PostMapping("/{id}/update")
     public String updateWish(@PathVariable String name, Model model) {
         Wish wish = (Wish) wishlistService.searchWish(name);
-
         if (wish == null) {
             throw new IllegalArgumentException("error, invalid wish name");
         }
         model.addAttribute("wish", wish);
 
-        return "redirect:/wishlist/profile";
+        return "redirect: /profile";
     }
 
     @PostMapping("{id}/delete")
@@ -82,32 +71,34 @@ public class WishlistController {
     }
 
     //Kig denne metode igennem
-    @GetMapping("/addWishListForm")
-    public String addWishlist(Model model) {
+    @GetMapping("/addWishlist/{username}")
+    public String addWishlist(Model model, @PathVariable String username) {
 
+        System.out.println(username);
 
-        WishList newWishList = new WishList("halla");
-        model.addAttribute("wishlist", newWishList);
+        WishList newWishList = new WishList();
+        newWishList.setUserKey(username);
+        System.out.println(newWishList.getUserKey() + "vi er her");
 
-        //  wishlistService.addWishList(newWishList);
-        return "addWishListForm";
+        model.addAttribute("addWishlist", newWishList);
+
+        return "addWishlist";
     }
 
-    @PostMapping("/addWishList")
+    @PostMapping("/addWishlist")
     public String saveWishList(WishList wishList) {
+
+        System.out.println(wishList.getUserKey());
+
         wishlistService.addWishList(wishList);
-        return "redirect:/wishlist/list";
+        return "redirect:/profile";
     }
 
 
     @GetMapping("/addWish")
     public String addWish(Model model) {
         Wish newWish = new Wish();
-        model.addAttribute("addWishForm", newWish);
-//        model.addAttribute("price", newWish);
-//        model.addAttribute("link", newWish);
-//        model.addAttribute("id", newWish);
-//        model.addAttribute("description", newWish);
+        model.addAttribute("addGift", newWish);
 
         return "addGift";
     }
@@ -118,18 +109,5 @@ public class WishlistController {
         return "redirect:/wishlist/profile";
     }
 
-    //Mangler connection mellem html, muligvis ikke nødvendigt, og kan tilkobles til en anden controller.
-    @PostMapping("/search")
-    public String searchWish(@RequestParam String name, Model model){
-        Wish wish = wishlistService.searchWish(name);
 
-        if (wish == null){
-            model.addAttribute("error", "Der blev ikke fundet et ønske med navnet: " + name);
-            return "profile"; //Måske en anden
-        }
-
-        model.addAttribute("wish", wish);
-        return "profile"; //ÆNDRE TIL NOGET MERE RELAVANT, måske en ny html? Evt en wishDetails.html
-                          //
-    }
 }
