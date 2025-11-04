@@ -30,7 +30,8 @@
     <section class="card">
         <div class="header">
             <div>
-                <h1 th:text="'Ønskeliste'">Ønskeliste</h1>
+                <h1 th:text="${myWishList.name}"></h1>
+                <h2 th:text="${myWishList.userKey}"></h2>
             </div>
             <button class="btn btn-primary" onclick="myFunction()">Share</button>
         </div>

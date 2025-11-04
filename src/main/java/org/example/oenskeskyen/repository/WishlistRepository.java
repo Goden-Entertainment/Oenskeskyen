@@ -147,12 +147,12 @@ public class WishlistRepository {
 
     //Metode tiføjet til at finde en bruger i databasen ud fra email + password
     public User getUserByEmailAndPassword(String email, String password) {
-        String sql = """
-        SELECT id, username, password, email
-        FROM users
-        WHERE LOWER(email) = LOWER(?) AND password = ?
-        LIMIT 1
-    """;
+            String sql = """
+            SELECT id, username, password, email
+            FROM users
+            WHERE LOWER(email) = LOWER(?) AND password = ?
+            LIMIT 1
+        """;
 
         try {
             return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
@@ -169,5 +169,20 @@ public class WishlistRepository {
             // Ingen bruger fundet returner null
             return null;
         }
+    }
+
+    public User getUserByUsername(String username){
+        String sql = "select * from users where name = ?";
+
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+                new User(
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getInt("id"),
+                        null,
+                        rs.getString("email")
+                ),
+                username
+        );
     }
 }

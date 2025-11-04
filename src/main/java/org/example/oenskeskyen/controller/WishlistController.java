@@ -54,14 +54,10 @@ public class WishlistController {
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
     @GetMapping("myWishList/{id}")
     public String myWishList(Model model, @PathVariable int id) {
-        System.out.println(id);
         WishList wishList = wishlistService.searchWishList(id);
         List<Wish> wishes = wishlistService.getWishes();
         model.addAttribute("myWishList", wishList);
         model.addAttribute("wishes", wishes);
-        System.out.println(wishList);
-        System.out.println(wishes);
-        //SERCH WISH FUNKTIONEN MANGLER
         return "myWishlist";
     }
 
