@@ -88,15 +88,15 @@ public class WishlistController {
     @PostMapping("/addWishlist")
     public String saveWishList(WishList wishList) {
 
-
         wishlistService.addWishList(wishList);
         return "redirect:/profile";
     }
 
 
     @GetMapping("/addWish/{id}")
-    public String addWish(Model model) {
+    public String addWish(@PathVariable int id, Model model) {
         Wish newWish = new Wish();
+        newWish.setWishlistKey(id);
         model.addAttribute("addGift", newWish);
 
         return "addGift";
@@ -107,6 +107,4 @@ public class WishlistController {
         wishlistService.addWish(wish);
         return "redirect:/wishlist/profile";
     }
-
-
 }
