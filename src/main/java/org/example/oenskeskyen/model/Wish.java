@@ -60,6 +60,14 @@ public class Wish {
         this.description = description;
     }
 
+    public int getWishlistKey(){
+        return wishlistKey;
+    }
+
+    public void setWishlistKey(int wishlistKey){
+        this.wishlistKey = wishlistKey;
+    }
+
     @Override
     public String toString(){
         return id + " " + name;

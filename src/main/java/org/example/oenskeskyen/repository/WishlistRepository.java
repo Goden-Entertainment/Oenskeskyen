@@ -110,7 +110,7 @@ public class WishlistRepository {
     //Test
     public void addWish(Wish wish) {
         String sqlAdd = "INSERT INTO wishes (name, link, price, description, wishlistKey) values (?,?,?,?,?)";
-        jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice(), wish.getDescription()); //wish.getWishlistKey());
+        jdbcTemplate.update(sqlAdd, wish.getName(), wish.getLink(), wish.getPrice(), wish.getDescription(), wish.getWishlistKey());
     }
 
 

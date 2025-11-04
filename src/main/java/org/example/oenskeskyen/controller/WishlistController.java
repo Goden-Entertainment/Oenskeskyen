@@ -94,7 +94,7 @@ public class WishlistController {
     }
 
 
-    @GetMapping("/addWish")
+    @GetMapping("/addWish/{id}")
     public String addWish(Model model) {
         Wish newWish = new Wish();
         model.addAttribute("addGift", newWish);
@@ -105,7 +105,7 @@ public class WishlistController {
     @PostMapping("/addWish")
     public String saveWish(Wish wish) {
         wishlistService.addWish(wish);
-        return "redirect:/wishlist/list";
+        return "redirect:/wishlist/profile";
     }
 
 
