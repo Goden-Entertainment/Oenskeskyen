@@ -22,7 +22,6 @@ public class WishList {
         this.userKey = userKey;
     }
 
-
     public int getId() {
         return id;
     }
@@ -37,6 +36,14 @@ public class WishList {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserKey(){
+        return userKey;
+    }
+
+    public void setUserKey(String userKey){
+        this.userKey = userKey;
     }
 
     @Override
