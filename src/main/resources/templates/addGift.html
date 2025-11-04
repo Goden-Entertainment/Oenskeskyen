@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Gift</title>
+    <link rel="stylesheet" th:href="@{/css/add-wishlist.css}" />
+
+    <h1>Vi er i add gift</h1>
 </head>
 <body>
+<h2>Add Gift</h2>
 
+<form action="/wishlist/addWish" method="post">
+    <label for="name">Name</label><br>
+    <input type="text" id="name" name="name" placeholder="Brændbil fra BR" required><br><br>
+
+    <label for="price">Price</label><br>
+    <input type="number" id="price" name="price" placeholder="350" required><br><br>
+
+
+    <label for="link">Link</label><br>
+    <input type="text" id="link" name="link" placeholder="www.godennnn.com/brændbil"><br><br>
+
+    <label for="description">Description</label><br>
+    <textarea id="description" name="description" placeholder="Det skal være den røde brændbil."></textarea><br><br>
+
+    <button type="submit">Create Wish</button>
+    <button type="button" onclick="window.location.href='/wishlist/profile'">Cancel</button>
+</form>
 </body>
 </html>

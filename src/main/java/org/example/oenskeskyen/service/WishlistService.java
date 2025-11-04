@@ -29,8 +29,8 @@ public class WishlistService {
     }
 
 
-    public List<Wish> getWishes(int id) {
-        return wishlistRepository.getWishes(id);
+    public List<Wish> getWishes() {
+        return wishlistRepository.getWishes();
     }
 
     public List<WishList> getWishList() {

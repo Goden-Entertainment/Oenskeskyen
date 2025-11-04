@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,7 +39,7 @@ public class WishlistControllerTest {
     void shouldGetAllWishes() throws Exception{
         int id = 1;
         Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil", 1);
-        when(wishlistService.getWishes(1)).thenReturn(List.of(wishTest));
+        when(wishlistService.getWishes()).thenReturn(List.of(wishTest));
 
         mockMvc.perform(get("/wishlist/wishList").param("id", String.valueOf(id)))
                 .andExpect(status().isOk())
@@ -65,5 +65,20 @@ public class WishlistControllerTest {
         mockMvc.perform(post("/wishlist/T-shirt/update"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/wishlist/profile"));
+    }
+
+    @Test
+    void shouldAddWish() throws Exception{
+    Wish wishTest = new Wish("Typpppp", 6767, "www.shiii.com", 1, "The realest typpp shii", 1);
+
+    mockMvc.perform(post("/wishlist/addWish")
+            .param("name", wishTest.getName())
+            .param("price", String.valueOf(wishTest.getPrice()))
+            .param("link", wishTest.getLink())
+            .param("description", wishTest.getDescription()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/wishlist/myWishlist"));
+
+    verify(wishlistService, times(1)).addWish(any(Wish.class));
     }
 }
