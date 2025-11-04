@@ -33,10 +33,12 @@
                 <h1 th:text="${myWishList.name}"></h1>
                 <h2 th:text="${myWishList.userKey}"></h2>
             </div>
-            <button class="btn btn-primary" onclick="myFunction()">Share</button>
-            <a th:href="@{/wishlist/addWish/{id}(id=${myWishList.getId()})}">
-                <button class="btn btn-primary">Tilføj ønske</button>
-            </a>
+            <div>
+                <button class="btn btn-primary" onclick="myFunction()">Share</button>
+                <a th:href="@{/wishlist/addWish/{id}(id=${myWishList.getId()})}">
+                    <button class="btn btn-primary">Tilføj ønske</button>
+                </a>
+            </div>
         </div>
 
         <div class="wishlist">
