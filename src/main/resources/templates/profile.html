@@ -52,7 +52,7 @@
         <div class="card__body">
             <!-- Skal sættes videre til "edit, tror jeg" -->
             <div class="create-static">
-                <a class="btn btn-primary" href="/wishlist/addWishlist" th:href="@{/wishlist/addWishlist}">Add Wishlist</a>
+                <a class="btn btn-primary" href="/wishlist/addWishlist" th:href="@{/wishlist/addWishlist/{username}(username = ${user.getUsername()})}">Add Wishlist</a>
             </div>
 
             <!-- Wishlist list -->

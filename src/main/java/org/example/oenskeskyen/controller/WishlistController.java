@@ -39,16 +39,6 @@ public class WishlistController {
 
     }
 
-    //Tror ikke vi skal bruge nedenstående mere
-//    @GetMapping("profile")
-//    public String showProfile(Model model) {
-//        //model.addAttribute("wishlist", wishlistService.getWishList());
-//
-//        //henter alle ønskelister
-//        List<WishList> wishLists = wishlistService.getWishList();
-//        model.addAttribute("list", wishLists);
-//        return "profile";
-//    }
 
 
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
@@ -63,8 +53,8 @@ public class WishlistController {
 
 
     @PostMapping("/{id}/update")
-    public String updateWish(@PathVariable int id, Model model) {
-        Wish wish = (Wish) wishlistService.getWishes(id);
+    public String updateWish(@PathVariable String name, Model model) {
+        Wish wish = (Wish) wishlistService.searchWish(name);
         if (wish == null) {
             throw new IllegalArgumentException("error, invalid wish name");
         }
@@ -81,18 +71,25 @@ public class WishlistController {
     }
 
     //Kig denne metode igennem
-    @GetMapping("/addWishlist")
-    public String addWishlist(Model model) {
+    @GetMapping("/addWishlist/{username}")
+    public String addWishlist(Model model, @PathVariable String username) {
+
+        System.out.println(username);
 
         WishList newWishList = new WishList();
+        newWishList.setUserKey(username);
+        System.out.println(newWishList.getUserKey() + "vi er her");
+
         model.addAttribute("addWishlist", newWishList);
 
-        //  wishlistService.addWishList(newWishList);
         return "addWishlist";
     }
 
     @PostMapping("/addWishlist")
     public String saveWishList(WishList wishList) {
+
+        System.out.println(wishList.getUserKey());
+
         wishlistService.addWishList(wishList);
         return "redirect:/profile";
     }

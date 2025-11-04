@@ -89,8 +89,8 @@ public class WishlistRepository {
 
     //test
     public void addWishList(WishList wishList) {
-        String sqlAdd = "INSERT INTO wishlist (name) values(?)";
-        jdbcTemplate.update(sqlAdd, wishList.getName());
+        String sqlAdd = "INSERT INTO wishlist (name,userKey) values(?,?)";
+        jdbcTemplate.update(sqlAdd, wishList.getName(),wishList.getUserKey());
     }
 
     public WishList serchWishList(int id) {
