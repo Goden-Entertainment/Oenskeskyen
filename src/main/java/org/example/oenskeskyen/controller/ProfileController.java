@@ -58,7 +58,7 @@ public class ProfileController {
             @RequestParam("password-repeat") String confirmPassword,
             @RequestParam(required = false) boolean remember
     ) {
-        return "profile";
+        return "redirect:/profile";
     }
 
     @GetMapping("/profile")
@@ -70,8 +70,7 @@ public class ProfileController {
             return "signin";
         }
 
-        java.util.List<org.example.oenskeskyen.model.WishList> wishlists = wishlistService.getWishList();
-
+        java.util.List<org.example.oenskeskyen.model.WishList> wishlists = wishlistService.getWishList(user.getUsername());
         model.addAttribute("user", user);
         model.addAttribute("wishlists", wishlists);
         return "profile";

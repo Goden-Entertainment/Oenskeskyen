@@ -33,8 +33,8 @@ public class WishlistService {
         return wishlistRepository.getWishes();
     }
 
-    public List<WishList> getWishList() {
-        return wishlistRepository.getWishList();
+    public List<WishList> getWishList(String userKey) {
+        return wishlistRepository.getWishList(userKey);
     }
 
     public void addWishList(WishList wishList) {
