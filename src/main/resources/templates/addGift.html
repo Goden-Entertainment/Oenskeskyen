@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Gift</title>
-    <link rel="stylesheet" th:href="@{/css/add-wishlist.css}" />
-
-    <h1>Vi er i add gift</h1>
+    <link rel="stylesheet" th:href="@{/css/addGift.css}" />
 </head>
-<body>
-<h2>Add Gift</h2>
+<body class="add-wishlist">
+<div class="add-wishlist__card">
+    <header class="add-wishlist__header">
+        <h2>Add a Gift</h2>
+    </header>
 
-<form action="/wishlist/addWish" method="post">
+    <form action="/wishlist/addWish" method="post">
 
-    <label for="name">Navn</label><br>
-    <input type="text" id="name" name="name" placeholder="Brændbil fra BR" required><br><br>
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Unc and Goden" required>
+        </div>
 
-    <label for="price">Pris</label><br>
-    <input type="number" id="price" name="price" placeholder="350" required><br><br>
+        <div class="field">
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" placeholder="350" required>
+        </div>
 
-    <label for="link">Link</label><br>
-    <input type="text" id="link" name="link" placeholder="www.godennnn.com/brændbil"><br><br>
+        <div class="field">
+            <label for="link">Link</label>
+            <input type="text" id="link" name="link" placeholder="www.godennnn.com/brændbil">
+        </div>
 
-    <label for="description">Beskriv dit ønske</label><br>
-    <textarea id="description" name="description" placeholder="Det skal være den røde brændbil."></textarea><br><br>
+        <div class="field">
+            <label for="description">Describe the product</label>
+            <textarea id="description" name="description" placeholder="Yadiii is a nice cat."></textarea>
+        </div>
 
-    <input type="hidden" name="wishlistKey" th:value="${addGift.getWishlistKey()}"/>
+        <input type="hidden" name="wishlistKey" th:value="${addGift.getWishlistKey()}"/>
 
-    <button type="submit">Lav Ønske</button>
-    <a href="/wishlist/profile" class="btn btn--ghost">Cancel</a>
+        <div class="actions">
+            <button type="submit" class="btn btn--primary">Make Wish</button>
+            <a href="/profile" class="btn btn--ghost">Annuller</a>
+        </div>
 
-</form>
+    </form>
+</div>
 </body>
 </html>
