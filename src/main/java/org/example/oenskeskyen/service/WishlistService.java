@@ -76,4 +76,7 @@ public class WishlistService {
         return wishlistRepository.getUserByEmailAndPassword(email, password);
     }
 
+    public User getUserByUsername(String username){
+        return wishlistRepository.getUserByUsername(username);
+    }
 }
