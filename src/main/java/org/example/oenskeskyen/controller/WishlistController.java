@@ -113,13 +113,13 @@ public class WishlistController {
 //        model.addAttribute("id", newWish);
 //        model.addAttribute("description", newWish);
 
-        return "addWishForm";
+        return "addGift";
     }
 
     @PostMapping("/addWish")
     public String saveWish(Wish wish) {
         wishlistService.addWish(wish);
-        return "redirect:/wishlist/list";
+        return "redirect:/wishlist/profile";
     }
 
     //Mangler connection mellem html, muligvis ikke nødvendigt, og kan tilkobles til en anden controller.
