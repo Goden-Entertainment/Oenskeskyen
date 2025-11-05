@@ -59,7 +59,7 @@ public class WishlistService {
         wishlistRepository.addWishList(wishList);
     }
 
-    public WishList searchWishList(int id) {
+    public WishList searchWishList(int id){
         return wishlistRepository.serchWishList(id);
     }
 
@@ -94,7 +94,7 @@ public class WishlistService {
         return wishlistRepository.getUserByEmailAndPassword(email, password);
     }
 
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String username){
         return wishlistRepository.getUserByUsername(username);
     }
 }

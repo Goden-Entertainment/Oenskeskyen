@@ -34,6 +34,17 @@ public class WishlistRepository {
     }
 
     public void testData() {
+        Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users", Integer.class);
+
+        if (count != null && count > 0) {
+            System.out.println("Testdata findes allerede – springer over.");
+            return;
+        }
+
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
+        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
@@ -186,6 +197,5 @@ public class WishlistRepository {
                 ),
                 username
         );
-
     }
 }

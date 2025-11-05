@@ -20,7 +20,6 @@ public class WishlistController {
 
     public WishlistController(WishlistService wishlistService) {
         this.wishlistService = wishlistService;
-
     }
 
     @GetMapping("addUser")
@@ -40,7 +39,6 @@ public class WishlistController {
     }
 
 
-
     //ER DET DEN SAMMEN SOM DEN FOR NEDEN???
     @GetMapping("myWishList/{id}")
     public String myWishList(Model model, @PathVariable int id) {
@@ -52,7 +50,7 @@ public class WishlistController {
     }
 
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/{name}/update")
     public String updateWish(@PathVariable String name, Model model) {
         Wish wish = (Wish) wishlistService.searchWish(name);
         if (wish == null) {
@@ -60,7 +58,7 @@ public class WishlistController {
         }
         model.addAttribute("wish", wish);
 
-        return "redirect: /profile";
+        return "redirect:/profile";
     }
 
     //wishlistId = Id så vi kan komme tilbage til listen. wishId = id'et vi vil slette. 3/delete/5 fx.

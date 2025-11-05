@@ -2,6 +2,7 @@ package org.example.oenskeskyen.controller;
 
 import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
+import org.example.oenskeskyen.model.WishList;
 import org.example.oenskeskyen.service.WishlistService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,17 +37,19 @@ public class WishlistControllerTest {
 
     //Tester myWishList GetMapping controlleren, checker om den
     @Test
-    void shouldGetAllWishes() throws Exception{
+    void shouldGetAllWishes() throws Exception {
         int id = 1;
         Wish wishTest = new Wish("Brandbil", 250, "WWW.br.dk", 1, "Det er en blå brandbil", 1);
-        when(wishlistService.getWishesByWishlistId(1)).thenReturn(List.of(wishTest));
 
-        mockMvc.perform(get("/wishlist/wishList").param("id", String.valueOf(id)))
+        when(wishlistService.getWishesByWishlistId(1)).thenReturn(List.of(wishTest));
+        when(wishlistService.searchWishList(1)).thenReturn(new WishList());
+
+        mockMvc.perform(get("/wishlist/myWishList/{id}", id))
                 .andExpect(status().isOk())
-                .andExpect(view().name("myWishList"))
+                .andExpect(view().name("myWishlist"))
                 .andExpect(model().attributeExists("myWishList"))
-                .andExpect(model().attribute("myWishList", List.of(wishTest)))
-                .andExpect(model().attributeExists("addWishForm"));
+                .andExpect(model().attributeExists("wishes"))
+                .andExpect(model().attribute("wishes", List.of(wishTest)));
     }
 
     //Venter med at lave testen færdig til addUser er done.
@@ -64,6 +67,6 @@ public class WishlistControllerTest {
 
         mockMvc.perform(post("/wishlist/T-shirt/update"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/wishlist/profile"));
+                .andExpect(redirectedUrl("/profile"));
     }
 }
