@@ -1,4 +1,5 @@
 package org.example.oenskeskyen.h2Test;
+
 import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.repository.WishlistRepository;
@@ -26,17 +27,11 @@ public class oenskeskyenRepoTest {
     private WishlistRepository repo;
 
     @Test
-    void all (){
-        // ARRANGE
+    void all() {
         int wishlistId = 1;
 
-        // ACT
         List<Wish> all = repo.getWishesByWishlistId(wishlistId);
 
-        // ASSERT
-//        for(Wish wish : all){
-//            assertEquals(wish, wish);
-//        }
         assertThat(all).isNotNull();
         assertThat(all.size()).isEqualTo(2);
         assertThat(all.get(0).getName()).isEqualTo("helicoptor");
@@ -44,9 +39,9 @@ public class oenskeskyenRepoTest {
     }
 
     @Test
-    void insertAndReadBack(){
+    void insertAndReadBack() {
 
-        repo.addUser(new User ("bob", "kode1234", "bob@gmail.com"));
+        repo.addUser(new User("bob", "kode1234", "bob@gmail.com"));
         var bob = repo.getUserByEmailAndPassword("bob@gmail.com", "kode1234");
         assertThat(bob).isNotNull();
         assertThat(bob.getEmail()).isEqualTo("bob@gmail.com");

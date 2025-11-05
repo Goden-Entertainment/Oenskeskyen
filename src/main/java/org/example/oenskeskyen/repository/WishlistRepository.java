@@ -41,14 +41,11 @@ public class WishlistRepository {
             return;
         }
 
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
+
 
         jdbcTemplate.update("INSERT INTO wishlist(name, userKey) VALUES (?,?)", "Godens Ønskeliste", "Goden");
         jdbcTemplate.update("INSERT INTO wishlist(name, userKey) VALUES (?,?)", "Yadis ønskeliste", "Yadiii");
