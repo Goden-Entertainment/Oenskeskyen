@@ -33,6 +33,7 @@
                 <h1 th:text="${myWishList.name}"></h1>
                 <h2 th:text="${myWishList.userKey}"></h2>
             </div>
+
             <div>
                 <button class="btn btn-primary" onclick="myFunction()">Share</button>
                 <a th:href="@{/wishlist/addWish/{id}(id=${myWishList.getId()})}">
