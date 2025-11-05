@@ -17,6 +17,11 @@ public class User {
         this.email = email;
         this.wishlist = wishlist;
     }
+    public User(String username, String password, String email){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public User(){}
 

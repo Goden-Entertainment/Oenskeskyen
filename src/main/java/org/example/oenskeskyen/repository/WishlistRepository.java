@@ -5,13 +5,9 @@ import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -31,33 +27,34 @@ public class WishlistRepository {
 
     //opmærksom på hvordan wishes er skrevet op
     public void makeTable() {
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255))");
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255) UNIQUE)");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishlist(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), userKey VARCHAR(255))");
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS wishes(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DOUBLE, link VARCHAR(255), description VARCHAR(255), wishlistKey INT)");
 
     }
 
     public void testData() {
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
-        jdbcTemplate.update("INSERT IGNORE INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
+        jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
+        jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
+        jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "RuneDog", "missekat", "missekat@gmail.com");
+        jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Unc", "Morp", "unc@gmail.com");
 
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?,?)", "Godens Ønskeliste", "Goden");
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?,?)", "Yadis ønskeliste", "Yadiii");
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?,?)", "Druid Ønskeliste", "RuneDog");
-        jdbcTemplate.update("INSERT IGNORE INTO wishlist(name, userKey) VALUES (?,?)", "Unc", "Unc");
+        jdbcTemplate.update("INSERT INTO wishlist(name, userKey) VALUES (?,?)", "Godens Ønskeliste", "Goden");
+        jdbcTemplate.update("INSERT INTO wishlist(name, userKey) VALUES (?,?)", "Yadis ønskeliste", "Yadiii");
+        jdbcTemplate.update("INSERT INTO wishlist(name, userKey) VALUES (?,?)", "Druid Ønskeliste", "RuneDog");
+        jdbcTemplate.update("INSERT INTO wishlist(name, userKey) VALUES (?,?)", "Unc", "Unc");
 
-        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Brøndbil", "250 kr.", "www.yadi.com", "Den skal være rød", 1);
-        jdbcTemplate.update("INSERT IGNORE INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Tshirt H&M", "450 kr.", "august.com", "Den skal være i M og sort", 1);
+        jdbcTemplate.update("INSERT INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Brøndbil", 250, "www.yadi.com", "Den skal være rød", 1);
+        jdbcTemplate.update("INSERT INTO wishes(name, price, link, description, wishlistKey) VALUES (?, ?, ?, ?, ?)", "Tshirt H&M", 450, "august.com", "Den skal være i M og sort", 1);
     }
 
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         String sqlAddUser = "INSERT INTO users (username, password, email) values (?,?,?)";
 
         jdbcTemplate.update(sqlAddUser, user.getUsername(), user.getPassword(), user.getEmail());
 
+        return user;
     }
 
     //Her
@@ -189,5 +186,6 @@ public class WishlistRepository {
                 ),
                 username
         );
+
     }
 }

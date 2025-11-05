@@ -72,5 +72,14 @@ public class Wish {
     public String toString(){
         return id + " " + name;
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(this == other) return true;
+
+        if(!(this instanceof Wish)) return false;
+
+        return this.id == ((Wish) other).id;
+    }
 }
 

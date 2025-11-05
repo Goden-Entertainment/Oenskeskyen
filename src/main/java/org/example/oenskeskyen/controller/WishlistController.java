@@ -35,7 +35,7 @@ public class WishlistController {
     public String saveUser(@ModelAttribute User user) {
         wishlistService.addUser(user);
 
-        return "redirect:/wishlist/profile";
+        return "redirect:/profile";
 
     }
 

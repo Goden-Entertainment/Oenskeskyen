@@ -1,6 +1,7 @@
 package org.example.oenskeskyen.controller;
 
 import org.example.oenskeskyen.exceptions.DatabaseOperationException;
+import org.example.oenskeskyen.exceptions.DuplicateProfileException;
 import org.example.oenskeskyen.exceptions.ProfileNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -25,6 +26,14 @@ public class GlobalExceptionHandler {
         model.addAttribute("message", ex.getMessage());
         return "error/404";
     }
+    @ExceptionHandler(DuplicateProfileException.class)
+    public String handleDuplicate(DuplicateProfileException ex, Model model) {
+        model.addAttribute("status", HttpStatus.CONFLICT.value());
+        model.addAttribute("error", "Duplicate Entry");
+        model.addAttribute("message", ex.getMessage());
+        return "errorPage";
+    }
+
 
 
 }

@@ -1,6 +1,7 @@
 package org.example.oenskeskyen.service;
 
 import org.example.oenskeskyen.exceptions.DatabaseOperationException;
+import org.example.oenskeskyen.exceptions.DuplicateProfileException;
 import org.example.oenskeskyen.exceptions.ProfileNotFoundException;
 import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
@@ -24,9 +25,26 @@ public class WishlistService {
     }
 
 
-    public void addUser(User user) {
-        wishlistRepository.addUser(user);
+    public User addUser(User user) {
+
+        try {
+            User savedUser = wishlistRepository.addUser(user);
+
+            if (savedUser == null) {
+                throw new ProfileNotFoundException(user.getId());
+            }
+
+            return savedUser;
+
+        } catch (DataIntegrityViolationException e) {
+            // Dette sker når email allerede findes (constraint i DB)
+            throw new DuplicateProfileException("A profile with this email already exists");
+        } catch (DataAccessException e) {
+            // Almindelige databasefejl
+            throw new DatabaseOperationException("Failed to update profile", e);
+        }
     }
+
 
 
     public List<Wish> getWishesByWishlistId(int wishlistId) {
@@ -41,7 +59,7 @@ public class WishlistService {
         wishlistRepository.addWishList(wishList);
     }
 
-    public WishList searchWishList(int id){
+    public WishList searchWishList(int id) {
         return wishlistRepository.serchWishList(id);
     }
 
@@ -76,7 +94,7 @@ public class WishlistService {
         return wishlistRepository.getUserByEmailAndPassword(email, password);
     }
 
-    public User getUserByUsername(String username){
+    public User getUserByUsername(String username) {
         return wishlistRepository.getUserByUsername(username);
     }
 }
