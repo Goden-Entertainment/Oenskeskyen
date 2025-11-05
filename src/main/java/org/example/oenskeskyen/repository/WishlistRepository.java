@@ -25,7 +25,6 @@ public class WishlistRepository {
     @PostConstruct
     public void init(){
         makeTable();
-        testData();
     }
 
     //opmærksom på hvordan wishes er skrevet op
