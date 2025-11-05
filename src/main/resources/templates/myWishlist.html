@@ -29,6 +29,9 @@
 <main class="container">
     <section class="card">
         <div class="header">
+            <a th:href="@{/profile}">
+                <button class="btn btn-secondary">Tilbage</button>
+            </a>
             <div>
                 <h1 th:text="${myWishList.name}"></h1>
                 <h2 th:text="${myWishList.userKey}"></h2>
