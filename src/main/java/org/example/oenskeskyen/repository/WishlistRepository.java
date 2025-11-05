@@ -1,5 +1,6 @@
 package org.example.oenskeskyen.repository;
 
+import jakarta.annotation.PostConstruct;
 import org.example.oenskeskyen.model.User;
 import org.example.oenskeskyen.model.Wish;
 import org.example.oenskeskyen.model.WishList;
@@ -18,9 +19,11 @@ public class WishlistRepository {
     private User user;
 
     public WishlistRepository(JdbcTemplate jdbcTemplate) {
-
         this.jdbcTemplate = jdbcTemplate;
+    }
 
+    @PostConstruct
+    public void init(){
         makeTable();
         testData();
     }
