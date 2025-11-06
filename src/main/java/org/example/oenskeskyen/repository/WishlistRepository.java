@@ -25,6 +25,7 @@ public class WishlistRepository {
     @PostConstruct
     public void init(){
         makeTable();
+        testData();
     }
 
     //opmærksom på hvordan wishes er skrevet op
@@ -36,12 +37,12 @@ public class WishlistRepository {
     }
 
     public void testData() {
-//        Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users", Integer.class);
-//
-//        if (count != null && count > 0) {
-//            System.out.println("Testdata findes allerede – springer over.");
-//            return;
-//        }
+        Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users", Integer.class);
+
+        if (count != null && count > 0) {
+            System.out.println("Testdata findes allerede – springer over.");
+            return;
+        }
 
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Goden", "Kode", "goden@gmail.com");
         jdbcTemplate.update("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", "Yadiii", "Deeznuts", "yadi123@gmail.com");
